@@ -1,7 +1,5 @@
 # Bootcamp Rocketseat - Desafio Final
 
-## Instalação
-
 - ### Bancos de dados Postgres e Redis via Docker
 
   Docker - Postgres
@@ -38,11 +36,14 @@
     adonis seed
     ```
 
-  - ### Rodar a fila para envio de email
-    ```
-    adonis kue:listen
-    ```
-  - ### Iniciar a aplicação
-    ```
-    adonis serve --dev
-    ```
+- ### Rodar a fila para envio de email
+
+  ```
+  adonis kue:listen
+  ```
+
+- ### Iniciar a aplicação
+
+  ```
+  adonis serve --dev
+  ```
