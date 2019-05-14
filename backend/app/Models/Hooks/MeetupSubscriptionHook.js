@@ -9,7 +9,7 @@ const Job = use('App/Jobs/MeetupSubscriptionMail')
 const MeetupSubscriptionHook = (exports = module.exports = {})
 
 MeetupSubscriptionHook.sendMail = async subscription => {
-  const user = await subscription.user().first()
+  const user = await subscription.user().fetch()
   const meetup = (await subscription.meetup().fetch()).toJSON()
 
   Kue.dispatch(
