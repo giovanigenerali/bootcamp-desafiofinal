@@ -5,18 +5,20 @@ const Model = use('Model')
 class Meetup extends Model {
   static scopeSubscribed (query, userId) {
     return query.whereHas('members', builder => {
-      builder.where('user_id', userId)
+      builder.where('user_id', userId).orderBy('when', 'asc')
     })
   }
 
   static scopeUpcoming (query) {
-    return query.where('when', '>', 'now()')
+    return query.where('when', '>', 'now()').orderBy('when', 'asc')
   }
 
   static scopeRecomended (query, userPreferences) {
-    query = query.whereHas('themes', builder => {
-      builder.whereIn('theme_id', userPreferences)
-    })
+    query = query
+      .whereHas('themes', builder => {
+        builder.whereIn('theme_id', userPreferences)
+      })
+      .orderBy('when', 'asc')
   }
 
   themes () {
