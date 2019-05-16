@@ -15,9 +15,9 @@ function Routes() {
   return (
     <ConnectedRouter history={history}>
       <Switch>
+        <Private path="/" extact component={Dashboard} />
         <Guest path="/signin" component={Signin} />
         <Guest path="/signup" component={Signup} />
-        <Private path="/" extact component={Dashboard} />
       </Switch>
     </ConnectedRouter>
   );

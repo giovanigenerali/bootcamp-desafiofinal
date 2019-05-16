@@ -1,9 +1,3 @@
-import React from 'react';
+import styled from 'styled-components';
 
-// import { Container } from './styles';
-
-function Dashboard() {
-  return <div>Dashboard</div>;
-}
-
-export default Dashboard;
+export const Container = styled.div``;
