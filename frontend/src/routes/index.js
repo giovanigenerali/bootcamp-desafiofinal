@@ -1,8 +1,11 @@
 import React from 'react';
 import { ConnectedRouter } from 'connected-react-router';
-import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 
 import history from './history';
+
+import Private from './private';
+import Guest from './guest';
 
 import Dashboard from '../pages/dashboard';
 import Signin from '../pages/auth/signin';
@@ -12,9 +15,9 @@ function Routes() {
   return (
     <ConnectedRouter history={history}>
       <Switch>
-        <Route path="/signin" component={Signin} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/" extact component={Dashboard} />
+        <Guest path="/signin" component={Signin} />
+        <Guest path="/signup" component={Signup} />
+        <Private path="/" extact component={Dashboard} />
       </Switch>
     </ConnectedRouter>
   );
