@@ -18,9 +18,7 @@ const GuestRoute = ({ component: Component, ...rest }) => (
 
 GuestRoute.propTypes = {
   component: PropTypes.elementType.isRequired,
-  location: PropTypes.shape({
-    pathname: PropTypes.string,
-  }),
+  location: PropTypes.shape(PropTypes.object.isRequired),
 };
 
 GuestRoute.defaultProps = {
