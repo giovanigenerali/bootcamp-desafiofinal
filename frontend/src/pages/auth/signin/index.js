@@ -6,9 +6,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import AuthActions from '../../../store/ducks/auth';
 
-import { ReactComponent as Logo } from '../../../assets/logo.svg';
+import Logo from '../../../styles/components/Logo';
+import Form from '../../../styles/components/Form';
 import Button from '../../../styles/components/Button';
-import { Container, SignForm } from '../styles';
+import Input from '../../../styles/components/Input';
+import { Container } from '../styles';
 
 class Signin extends Component {
   static propTypes = {
@@ -38,11 +40,11 @@ class Signin extends Component {
 
     return (
       <Container>
-        <Logo />
+        <Logo type="default" alt="Logo Meetapp" />
 
-        <SignForm onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit}>
           <span>Email</span>
-          <input
+          <Input
             type="email"
             name="email"
             placeholder="Digite seu e-mail"
@@ -53,7 +55,7 @@ class Signin extends Component {
           />
 
           <span>Senha</span>
-          <input
+          <Input
             type="password"
             name="password"
             placeholder="Suga senha secreta"
@@ -64,7 +66,7 @@ class Signin extends Component {
           />
 
           <Button type="submit">Entrar</Button>
-        </SignForm>
+        </Form>
 
         <Link to="/signup">Criar conta grátis</Link>
       </Container>

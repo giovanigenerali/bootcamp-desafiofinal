@@ -11,7 +11,7 @@ export default createGlobalStyle`
   }
 
   body {
-    background: #2a202c;
+    background: #26202c;
     color: #ffffff;
     font-family: Helvetica, Arial, sans-serif;
     font-size: 16px;

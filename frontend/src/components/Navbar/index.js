@@ -2,17 +2,19 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { MdPersonOutline } from 'react-icons/md';
-import Logo from '../../assets/logo-white.svg';
+import Logo from '../../styles/components/Logo';
 import { Container, Nav } from './styles';
 
 export default function Navbar() {
   return (
     <Container>
-      <img src={Logo} alt="Meetapp" />
+      <Logo type="white" alt="Logo Meetapp" />
       <Nav>
         <ul>
           <li>
-            <NavLink to="/">Início</NavLink>
+            <NavLink to="/" exact>
+              Início
+            </NavLink>
           </li>
           <li>
             <NavLink to="/meetups/search">Buscar</NavLink>

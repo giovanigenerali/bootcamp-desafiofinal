@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-const Button = styled.button.attrs({
+const Button = styled.button.attrs(() => ({
   type: 'button',
-})`
+}))`
   border-radius: 3px;
   background: #e5556e;
   transition: background-color 0.2s ease;

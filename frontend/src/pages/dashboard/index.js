@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { Container } from './styles';
 
@@ -6,10 +6,12 @@ import Navbar from '../../components/Navbar';
 
 function Dashboard() {
   return (
-    <Container>
+    <Fragment>
       <Navbar />
-      <div>Dashboard</div>
-    </Container>
+      <Container>
+        <div>Dashboard</div>
+      </Container>
+    </Fragment>
   );
 }
 

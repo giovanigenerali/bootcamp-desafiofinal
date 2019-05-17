@@ -9,12 +9,6 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  svg {
-    display: flex;
-    align-self: center;
-    margin-bottom: 30px;
-  }
-
   a {
     color: #fff;
     opacity: 0.6;
@@ -32,27 +26,6 @@ export const Container = styled.div`
   }
 `;
 
-export const SignForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  padding: 10px;
-  width: 315px;
-
-  span {
-    font-weight: bold;
-  }
-
-  input {
-    color: #fff;
-    font-size: 20px;
-    border: 1px solid transparent;
-    background: transparent !important;
-    margin: 10px 0 40px 0;
-    padding: 0;
-
-    &::placeholder {
-      color: rgba(256, 256, 256, 0.6);
-    }
-  }
+export const Logo = styled.image`
+  margin-bottom: 30px;
 `;

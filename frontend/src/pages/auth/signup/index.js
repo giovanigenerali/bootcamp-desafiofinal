@@ -1,21 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { ReactComponent as Logo } from '../../../assets/logo.svg';
+import Logo from '../../../styles/components/Logo';
+import Form from '../../../styles/components/Form';
 import Button from '../../../styles/components/Button';
-import { Container, SignForm } from '../styles';
+import Input from '../../../styles/components/Input';
+import { Container } from '../styles';
 
 function Signup() {
   return (
     <Container>
-      <Logo />
+      <Logo type="default" alt="Logo Meetapp" />
 
-      <SignForm onSubmit={() => {}}>
+      <Form onSubmit={() => {}}>
         <span>Email</span>
-        <input type="email" name="email" placeholder="Digite seu e-mail" autoComplete="email" />
+        <Input type="email" name="email" placeholder="Digite seu e-mail" autoComplete="email" />
 
         <span>Senha</span>
-        <input
+        <Input
           type="password"
           name="password"
           placeholder="Suga senha secreta"
@@ -23,7 +25,7 @@ function Signup() {
         />
 
         <Button type="submit">Entrar</Button>
-      </SignForm>
+      </Form>
 
       <Link to="/signup">Criar conta grátis</Link>
     </Container>

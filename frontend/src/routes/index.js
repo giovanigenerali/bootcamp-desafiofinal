@@ -10,14 +10,18 @@ import Guest from './guest';
 import Dashboard from '../pages/dashboard';
 import Signin from '../pages/auth/signin';
 import Signup from '../pages/auth/signup';
+import SearchMeetup from '../pages/meetup/search';
+import NewMeetup from '../pages/meetup/new';
 
 function Routes() {
   return (
     <ConnectedRouter history={history}>
       <Switch>
-        <Private path="/" extact component={Dashboard} />
         <Guest path="/signin" component={Signin} />
         <Guest path="/signup" component={Signup} />
+        <Private path="/meetups/search" component={SearchMeetup} />
+        <Private path="/meetups/new" component={NewMeetup} />
+        <Private path="/" extact component={Dashboard} />
       </Switch>
     </ConnectedRouter>
   );
