@@ -23,6 +23,7 @@ Route.group(() => {
       ])
     )
 
+  Route.get('themes', 'ThemeController.index')
   Route.post('meetups/:id/subscriber', 'MeetupSubscriberController.store')
   Route.delete('meetups/:id/unsubscriber', 'MeetupSubscriberController.delete')
 
