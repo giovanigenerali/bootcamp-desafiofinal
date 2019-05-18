@@ -1,11 +1,13 @@
 import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
 import { toastr } from 'react-redux-toastr';
+import moment from 'moment';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MdCameraAlt, MdRemoveCircle } from 'react-icons/md';
 import ThemesActions from '../../../store/ducks/themes';
+import MeetupsActions from '../../../store/ducks/meetups';
 
 import Form from '../../../styles/components/Form';
 import Input from '../../../styles/components/Input';
@@ -19,6 +21,7 @@ import Navbar from '../../../components/Navbar';
 class NewMeetup extends Component {
   static propTypes = {
     loadThemesRequest: PropTypes.func.isRequired,
+    meetupNewRequest: PropTypes.func.isRequired,
     themes: PropTypes.shape({
       id: PropTypes.string,
       title: PropTypes.string,
@@ -26,8 +29,13 @@ class NewMeetup extends Component {
   };
 
   state = {
+    title: '',
+    description: '',
+    when: '',
+    where: '',
+    themesId: [],
     imagePreview: null,
-    fileName: null,
+    file: null,
     fileKey: Date.now(),
   };
 
@@ -37,11 +45,30 @@ class NewMeetup extends Component {
     loadThemesRequest();
   }
 
+  handleInputChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  handleCheckboxChange = (event) => {
+    const themeId = event.target.value;
+    const isChecked = event.target.checked;
+    const { themesId } = this.state;
+
+    if (isChecked) {
+      this.setState({ themesId: [...themesId, themeId] });
+    } else {
+      this.setState({ themesId: themesId.filter(theme => theme !== themeId) });
+    }
+  };
+
   handleFileUpload = (event) => {
     const file = event.target.files[0];
     const mimeTypes = ['image/png', 'image/jpeg', 'image/jpg'];
 
     if (!file) {
+      return;
+    }
+    if (event.target.value.length === 0) {
       return;
     }
 
@@ -57,32 +84,85 @@ class NewMeetup extends Component {
       return;
     }
 
-    this.setState({ fileName: file.name });
+    this.setState({ file });
+
     const previewImageUrl = URL.createObjectURL(file);
+
     this.setState({ imagePreview: previewImageUrl });
   };
 
   handleFileCleanup = () => {
-    this.setState({ imagePreview: null, fileName: null, fileKey: Date.now() });
+    this.setState({ imagePreview: null, file: null, fileKey: Date.now() });
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const {
+      title, description, where, when, themesId, file,
+    } = this.state;
+    const { meetupNewRequest } = this.props;
+
+    if (!file) {
+      toastr.warning('Atenção', 'Escolha uma imagem para o meetup');
+      return;
+    }
+
+    if (themesId.length === 0) {
+      toastr.warning('Atenção', 'Escolha um tema para o meetup');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('where', where);
+    formData.append('when', moment(when).format('YYYY-MM-DD HH:mm:ss'));
+    formData.append('image', file);
+    themesId.map(theme => formData.append('themes_id[]', theme));
+
+    meetupNewRequest(formData);
   };
 
   render() {
-    const { fileName, imagePreview, fileKey } = this.state;
+    const {
+      title, description, when, where, themesId, file, imagePreview, fileKey,
+    } = this.state;
+
     const { themes } = this.props;
 
     return (
       <Fragment>
         <Navbar />
         <Container>
-          <Form>
+          <Form onSubmit={this.handleSubmit}>
             <span>Título</span>
-            <Input type="text" name="title" placeholder="Digite o título do meetup" required />
+            <Input
+              type="text"
+              name="title"
+              placeholder="Digite o título do meetup"
+              value={title}
+              required
+              onChange={this.handleInputChange}
+            />
 
             <span>Descrição</span>
-            <Input type="text" name="description" placeholder="Descreva seu meetup" required />
+            <Input
+              type="text"
+              name="description"
+              placeholder="Descreva seu meetup"
+              value={description}
+              required
+              onChange={this.handleInputChange}
+            />
 
             <span>Data/hora</span>
-            <Input type="datetime-local" name="when" required />
+            <Input
+              type="datetime-local"
+              name="when"
+              value={when}
+              required
+              onChange={this.handleInputChange}
+            />
 
             <span>Imagem</span>
             <FileUpload>
@@ -101,7 +181,7 @@ class NewMeetup extends Component {
               </div>
               {imagePreview && (
                 <div className="fileCleanup">
-                  <span>{fileName}</span>
+                  <span>{file.name}</span>
                   <button type="button" onClick={this.handleFileCleanup}>
                     <MdRemoveCircle size={16} />
                   </button>
@@ -110,14 +190,27 @@ class NewMeetup extends Component {
             </FileUpload>
 
             <span>Localização</span>
-            <Input type="text" name="where" placeholder="Onde seu meetup irá acontecer?" required />
+            <Input
+              type="text"
+              name="where"
+              placeholder="Onde seu meetup irá acontecer?"
+              value={where}
+              required
+              onChange={this.handleInputChange}
+            />
 
             <span>Tema do meetup</span>
 
             <Themes>
               {themes.data.map(theme => (
                 <label key={theme.id}>
-                  <Input type="checkbox" name="themes_id[]" value={theme.id} />
+                  <Input
+                    type="checkbox"
+                    name="themes_id[]"
+                    value={theme.id}
+                    checked={themesId.includes(String(theme.id))}
+                    onChange={this.handleCheckboxChange}
+                  />
                   <span>{theme.title}</span>
                 </label>
               ))}
@@ -135,7 +228,13 @@ const mapStateToProps = state => ({
   themes: state.themes,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(ThemesActions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(
+  {
+    ...MeetupsActions,
+    ...ThemesActions,
+  },
+  dispatch,
+);
 
 export default connect(
   mapStateToProps,
