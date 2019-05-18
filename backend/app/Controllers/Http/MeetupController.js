@@ -41,7 +41,6 @@ class MeetupController {
     const data = request.only([
       'title',
       'description',
-      'image',
       'where',
       'when'
     ])
