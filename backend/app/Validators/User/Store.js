@@ -11,7 +11,7 @@ class Store {
     return {
       name: 'required|unique:users,name',
       email: 'required|email|unique:users,email',
-      password: 'required|confirmed'
+      password: 'required'
     }
   }
 
