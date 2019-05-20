@@ -16,35 +16,13 @@ class UserController {
     const profile = await User.query()
       .where('id', user.id)
       .with('preferences')
-      .fetch()
+      .first()
 
     return profile
   }
 
   async update ({ request, response, auth: { user } }) {
-    const data = request.only(['name', 'email', 'password', 'password_old'])
-
-    if (data.password_old) {
-      const isEqual = await Hash.verify(data.password_old, user.password)
-
-      if (!isEqual) {
-        return response.status(401).send({
-          error: {
-            message: 'A senha antiga não é válida'
-          }
-        })
-      }
-
-      if (!data.password) {
-        return response.status(401).send({
-          error: {
-            message: 'Você não informou a nova senha'
-          }
-        })
-      }
-
-      delete data.password_old
-    }
+    const data = request.only(['name', 'email', 'password'])
 
     if (!data.password) {
       delete data.password
