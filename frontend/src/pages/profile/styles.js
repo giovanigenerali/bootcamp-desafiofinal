@@ -4,9 +4,9 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  height: 100%;
   justify-content: center;
   align-items: center;
+  margin: 40px 0;
 
   a {
     color: #fff;
@@ -25,6 +25,16 @@ export const Container = styled.div`
   }
 `;
 
-export const Logo = styled.image`
+export const PreferencesIntro = styled.div`
+  strong {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 28px;
+  }
+
   margin-bottom: 30px;
 `;

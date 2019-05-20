@@ -6,6 +6,7 @@ const Themes = styled.div`
   margin: 20px 0;
 
   label {
+    font-size: 18px;
     color: rgba(256, 256, 256, 0.6);
     display: flex;
     align-items: flex-end;

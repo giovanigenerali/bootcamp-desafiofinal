@@ -8,6 +8,7 @@ const { Types, Creators } = createActions({
   signInSuccess: ['token'],
   signUpRequest: ['name', 'email', 'password'],
   signUpSuccess: ['token'],
+  logoutRequest: null,
 });
 
 export const AuthTypes = Types;
@@ -24,9 +25,15 @@ export const INITIAL_STATE = Immutable({
 
 export const success = (state, { token }) => state.merge({ signedIn: true, token });
 
+export const logout = (state) => {
+  localStorage.removeItem('@meetapp:token');
+  return state.merge({ signedIn: false, token: null });
+};
+
 /* Reducers to types */
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SIGN_IN_SUCCESS]: success,
   [Types.SIGN_UP_SUCCESS]: success,
+  [Types.LOGOUT_REQUEST]: logout,
 });

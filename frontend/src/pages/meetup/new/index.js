@@ -200,7 +200,6 @@ class NewMeetup extends Component {
             />
 
             <span>Tema do meetup</span>
-
             <Themes>
               {themes.data.map(theme => (
                 <label key={theme.id}>

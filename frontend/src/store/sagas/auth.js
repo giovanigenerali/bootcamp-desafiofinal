@@ -12,7 +12,10 @@ export function* signIn({ email, password }) {
     localStorage.setItem('@meetapp:token', response.data.token);
 
     yield put(AuthActions.signInSuccess(response.data.token));
-    yield put(push('/'));
+
+    const firstSignin = !!localStorage.getItem('@meetapp:first_signin');
+
+    yield put(push(firstSignin ? '/profile' : '/'));
   } catch (err) {
     yield put(
       toastrActions.add({
@@ -30,9 +33,11 @@ export function* signUp({ name, email, password }) {
 
     const response = yield call(api.post, 'sessions', { email, password });
     localStorage.setItem('@meetapp:token', response.data.token);
+    localStorage.setItem('@meetapp:first_signin', true);
 
     yield put(AuthActions.signUpSuccess(response.data.token));
-    yield put(push('/'));
+
+    yield put(push('/profile'));
   } catch (err) {
     yield put(
       toastrActions.add({
