@@ -1,7 +1,12 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { toastr } from 'react-redux-toastr';
 import moment from 'moment';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import { ptBR } from 'date-fns/locale';
+import {
+  addDays, setHours, setMinutes, setSeconds,
+} from 'date-fns/fp';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -17,6 +22,8 @@ import FileUpload from '../../../styles/components/FileUpload';
 import { Container } from './styles';
 
 import Navbar from '../../../components/Navbar';
+
+registerLocale('ptBR', ptBR);
 
 class NewMeetup extends Component {
   static propTypes = {
@@ -44,6 +51,10 @@ class NewMeetup extends Component {
 
     loadThemesRequest();
   }
+
+  handleDatepicker = (date) => {
+    this.setState({ when: date });
+  };
 
   handleInputChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
@@ -131,46 +142,63 @@ class NewMeetup extends Component {
     const { themes } = this.props;
 
     return (
-      <Fragment>
+      <>
         <Navbar />
         <Container>
           <Form onSubmit={this.handleSubmit}>
-            <span>Título</span>
+            <label htmlFor="title">Título</label>
             <Input
               type="text"
               name="title"
+              id="title"
               placeholder="Digite o título do meetup"
+              autoComplete="off"
               value={title}
               required
               onChange={this.handleInputChange}
             />
 
-            <span>Descrição</span>
+            <label htmlFor="description">Descrição</label>
             <Input
               type="text"
               name="description"
+              id="description"
               placeholder="Descreva seu meetup"
+              autoComplete="off"
               value={description}
               required
               onChange={this.handleInputChange}
             />
 
-            <span>Data/hora</span>
-            <Input
-              type="datetime-local"
+            <label htmlFor="when">Data/hora</label>
+            <DatePicker
               name="when"
-              value={when}
+              id="when"
+              showTimeSelect
+              selected={when}
+              onChange={this.handleDatepicker}
+              timeFormat="HH:mm"
+              dateFormat="dd/MM/yyyy HH:mm"
+              timeCaption="hora"
+              placeholderText="Quando o meetup vai acontecer?"
+              className="datapicker"
+              autoComplete="off"
+              locale="ptBR"
+              fixedHeight
+              minDate={addDays(1, new Date())}
+              minTime={[setHours(8, setMinutes(0, setSeconds(0, new Date())))]}
+              maxTime={setHours(18, setMinutes(0, setSeconds(0, new Date())))}
               required
-              onChange={this.handleInputChange}
             />
 
-            <span>Imagem</span>
+            <label htmlFor="image">Imagem</label>
             <FileUpload>
               <div className="fileWrapper">
                 {!imagePreview && <MdCameraAlt size={24} />}
                 <Input
                   type="file"
                   name="image"
+                  id="image"
                   accept="image/png, image/jpeg, image/jpg"
                   key={fileKey}
                   onChange={event => this.handleFileUpload(event)}
@@ -189,23 +217,26 @@ class NewMeetup extends Component {
               )}
             </FileUpload>
 
-            <span>Localização</span>
+            <label htmlFor="where">Localização</label>
             <Input
               type="text"
               name="where"
+              id="where"
               placeholder="Onde seu meetup irá acontecer?"
+              autoComplete="off"
               value={where}
               required
               onChange={this.handleInputChange}
             />
 
-            <span>Tema do meetup</span>
+            <label htmlFor="themes_id[]">Tema do meetup</label>
             <Themes>
               {themes.data.map(theme => (
                 <label key={theme.id}>
                   <Input
                     type="checkbox"
                     name="themes_id[]"
+                    id="themes_id[]"
                     value={theme.id}
                     checked={themesId.includes(String(theme.id))}
                     onChange={this.handleCheckboxChange}
@@ -218,7 +249,7 @@ class NewMeetup extends Component {
             <Button type="submit">Salvar</Button>
           </Form>
         </Container>
-      </Fragment>
+      </>
     );
   }
 }

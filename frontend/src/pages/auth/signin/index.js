@@ -43,10 +43,11 @@ class Signin extends Component {
         <Logo type="default" alt="Logo Meetapp" />
 
         <Form onSubmit={this.handleSubmit}>
-          <span>Email</span>
+          <label htmlFor="email">Email</label>
           <Input
             type="email"
             name="email"
+            id="email"
             placeholder="Digite seu e-mail"
             autoComplete="email"
             required
@@ -54,11 +55,12 @@ class Signin extends Component {
             onChange={this.handleInputChange}
           />
 
-          <span>Senha</span>
+          <label htmlFor="password">Senha</label>
           <Input
             type="password"
             name="password"
-            placeholder="Suga senha secreta"
+            id="password"
+            placeholder="Sua senha secreta"
             autoComplete="new-password"
             required
             value={password}

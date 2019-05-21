@@ -8,6 +8,10 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
+  img {
+    margin-bottom: 20px;
+  }
+
   a {
     color: #fff;
     opacity: 0.6;

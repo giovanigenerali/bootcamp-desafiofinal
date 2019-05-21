@@ -4,11 +4,15 @@ import { Container } from './styles';
 
 import Navbar from '../../../components/Navbar';
 
-export default function SearchMeetup() {
+function SearchMeetup() {
   return (
-    <Container>
+    <>
       <Navbar />
-      <div>SearchMeetup</div>
-    </Container>
+      <Container>
+        <div>SearchMeetup</div>
+      </Container>
+    </>
   );
 }
+
+export default SearchMeetup;

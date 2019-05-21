@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { toastr } from 'react-redux-toastr';
 import { Link } from 'react-router-dom';
@@ -9,7 +9,6 @@ import { bindActionCreators } from 'redux';
 import ThemesActions from '../../store/ducks/themes';
 import ProfileActions from '../../store/ducks/profile';
 
-import Loading from '../../styles/components/Loading';
 import Form from '../../styles/components/Form';
 import Button from '../../styles/components/Button';
 import Themes from '../../styles/components/Themes';
@@ -41,7 +40,7 @@ class Profile extends Component {
     password: '',
     passwordConfirmation: '',
     preferencesId: [],
-    firstSignin: false,
+    firstLogin: false,
   };
 
   componentDidMount() {
@@ -50,7 +49,7 @@ class Profile extends Component {
     loadThemesRequest();
     loadProfileRequest();
 
-    this.setState({ firstSignin: !!localStorage.getItem('@meetapp:first_signin') });
+    this.setState({ firstLogin: !!localStorage.getItem('@meetapp:first_login') });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -87,7 +86,7 @@ class Profile extends Component {
 
     const { updateProfileRequest } = this.props;
     const {
-      name, password, passwordConfirmation, preferencesId, firstSignin,
+      name, password, passwordConfirmation, preferencesId,
     } = this.state;
 
     if (password && password !== passwordConfirmation) {
@@ -96,10 +95,7 @@ class Profile extends Component {
     }
 
     if (preferencesId.length === 0) {
-      toastr.warning(
-        'Atenção',
-        firstSignin ? 'Escolha uma preferência' : 'Escolha um tema de meetup',
-      );
+      toastr.warning('Atenção', 'Escolha uma preferência');
       return;
     }
 
@@ -111,89 +107,93 @@ class Profile extends Component {
   render() {
     const { loading, themes } = this.props;
     const {
-      name, password, passwordConfirmation, preferencesId, firstSignin,
+      name, password, passwordConfirmation, preferencesId, firstLogin,
     } = this.state;
 
     return (
-      <Fragment>
+      <>
         <Navbar />
         <Container>
-          {loading ? (
-            <Loading>Carregando...</Loading>
-          ) : (
-            <Form onSubmit={this.handleSubmit}>
-              {!firstSignin && (
-                <>
-                  <span>Nome</span>
-                  <Input
-                    type="text"
-                    name="name"
-                    placeholder="Digite seu nome"
-                    autoComplete="name"
-                    required
-                    value={name}
-                    onChange={this.handleInputChange}
-                  />
-                  <span>Senha</span>
-                  <Input
-                    type="password"
-                    name="password"
-                    placeholder="Sua senha secreta"
-                    autoComplete="new-password"
-                    value={password}
-                    onChange={this.handleInputChange}
-                  />
-
-                  <span>Confirmação de senha</span>
-                  <Input
-                    type="password"
-                    name="passwordConfirmation"
-                    placeholder="Sua senha secreta"
-                    autoComplete="new-password-confirmation"
-                    value={passwordConfirmation}
-                    onChange={this.handleInputChange}
-                  />
-                  <span>Tema do meetup</span>
-                </>
-              )}
-
-              {firstSignin && (
-                <>
-                  <PreferencesIntro>
-                    <strong>{`Olá, ${name}`}</strong>
-                    <br />
-                    <br />
-                    <p>
-                      Parece que é seu primeiro acesso por aqui, comece escolhendo algumas
-                      preferências para selecionarmos os melhores meetups pra você:
-                    </p>
-                  </PreferencesIntro>
-
-                  <span>Preferências</span>
-                </>
-              )}
-
-              <Themes>
-                {themes.data.map(theme => (
-                  <label key={theme.id}>
+          {!loading && (
+            <>
+              <Form onSubmit={this.handleSubmit}>
+                {!firstLogin && (
+                  <>
+                    <label htmlFor="name">Nome</label>
                     <Input
-                      type="checkbox"
-                      name="preferences[]"
-                      checked={preferencesId && preferencesId.includes(theme.id)}
-                      value={theme.id}
-                      onChange={this.handleCheckboxChange}
+                      type="text"
+                      name="name"
+                      id="name"
+                      placeholder="Digite seu nome"
+                      autoComplete="name"
+                      required
+                      value={name}
+                      onChange={this.handleInputChange}
                     />
-                    <span>{theme.title}</span>
-                  </label>
-                ))}
-              </Themes>
 
-              <Button type="submit">{firstSignin ? 'Continuar' : 'Salvar'}</Button>
-            </Form>
+                    <label htmlFor="password">Senha</label>
+                    <Input
+                      type="password"
+                      name="password"
+                      id="password"
+                      placeholder="Sua senha secreta"
+                      autoComplete="new-password"
+                      value={password}
+                      onChange={this.handleInputChange}
+                    />
+
+                    <label htmlFor="passwordConfirmation">Confirmação de senha</label>
+                    <Input
+                      type="password"
+                      name="passwordConfirmation"
+                      id="passwordConfirmation"
+                      placeholder="Sua senha secreta"
+                      autoComplete="new-password-confirmation"
+                      value={passwordConfirmation}
+                      onChange={this.handleInputChange}
+                    />
+                  </>
+                )}
+
+                {firstLogin && (
+                  <>
+                    <PreferencesIntro>
+                      <strong>{`Olá, ${name}`}</strong>
+                      <br />
+                      <br />
+                      <p>
+                        Parece que é seu primeiro acesso por aqui, comece escolhendo algumas
+                        preferências para selecionarmos os melhores meetups pra você:
+                      </p>
+                    </PreferencesIntro>
+                  </>
+                )}
+
+                <label htmlFor="preferences[]">Preferências</label>
+                <Themes>
+                  {themes.data.map(theme => (
+                    <label key={theme.id}>
+                      <Input
+                        type="checkbox"
+                        name="preferences[]"
+                        id="preferences[]"
+                        checked={preferencesId && preferencesId.includes(theme.id)}
+                        value={theme.id}
+                        onChange={this.handleCheckboxChange}
+                      />
+                      <span>{theme.title}</span>
+                    </label>
+                  ))}
+                </Themes>
+
+                <Button type="submit">{firstLogin ? 'Continuar' : 'Salvar'}</Button>
+              </Form>
+
+              <Link to="/logout">Sair</Link>
+            </>
           )}
-          <Link to="/logout">Sair</Link>
         </Container>
-      </Fragment>
+      </>
     );
   }
 }

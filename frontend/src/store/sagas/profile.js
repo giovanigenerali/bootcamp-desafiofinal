@@ -36,10 +36,10 @@ export function* updateProfile({
     const response = yield call(api.put, 'profile', data);
     yield put(ProfileActions.updateProfileSuccess(response.data));
 
-    const firstSignin = !!localStorage.getItem('@meetapp:first_signin');
+    const firstLogin = !!localStorage.getItem('@meetapp:first_login');
 
-    if (firstSignin) {
-      localStorage.removeItem('@meetapp:first_signin');
+    if (firstLogin) {
+      localStorage.removeItem('@meetapp:first_login');
 
       yield put(push('/'));
     } else {

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import './config/reactotron';
 
 import { Provider } from 'react-redux';
@@ -10,7 +10,7 @@ import GlobalStyle from './styles/global';
 
 const App = () => (
   <Provider store={store}>
-    <Fragment>
+    <>
       <GlobalStyle />
       <Routes />
       <ReduxToastr
@@ -21,7 +21,7 @@ const App = () => (
         progressBar
         closeOnToastrClick
       />
-    </Fragment>
+    </>
   </Provider>
 );
 

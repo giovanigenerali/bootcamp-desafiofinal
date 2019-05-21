@@ -4,14 +4,12 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  padding: 10px;
-  width: 315px;
-
-  span {
-    font-weight: bold;
-  }
+  padding: 0;
+  min-width: 315px;
 
   label {
+    font-weight: bold;
+    cursor: pointer;
   }
 
   input[type='checkbox'] {
