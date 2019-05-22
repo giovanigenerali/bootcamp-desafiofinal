@@ -15,7 +15,7 @@ import Themes from '../../styles/components/Themes';
 import Input from '../../styles/components/Input';
 import { Container, PreferencesIntro } from './styles';
 
-import Navbar from '../../components/navbar';
+import Navbar from '../../components/Navbar';
 
 class Profile extends Component {
   static propTypes = {
@@ -176,7 +176,6 @@ class Profile extends Component {
                       <Input
                         type="checkbox"
                         name="preferences[]"
-                        id="preferences[]"
                         checked={preferencesId && preferencesId.includes(theme.id)}
                         value={theme.id}
                         onChange={this.handleCheckboxChange}

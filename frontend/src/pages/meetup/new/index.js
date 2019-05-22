@@ -23,7 +23,7 @@ import Themes from '../../../styles/components/Themes';
 import FileUpload from '../../../styles/components/FileUpload';
 import { Container } from './styles';
 
-import Navbar from '../../../components/navbar';
+import Navbar from '../../../components/Navbar';
 
 registerLocale('ptBR', ptBR);
 
