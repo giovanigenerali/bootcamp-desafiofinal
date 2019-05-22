@@ -7,7 +7,7 @@ const Meetup = use('App/Models/Meetup')
 
 class MeetupController {
   async index ({ request, auth: { user } }) {
-    const { page, type, title } = request.get()
+    const { page, filter, title } = request.get()
 
     let query = Meetup.query()
       .withCount('members')
@@ -18,13 +18,13 @@ class MeetupController {
       query = query.whereRaw(`LOWER(title) LIKE '%${title.toLowerCase()}%'`)
     }
 
-    /** search by type */
-    if (type) {
-      if (type === 'subscribed') {
+    /** search by filter */
+    if (filter) {
+      if (filter === 'subscribed') {
         query = query.subscribed(user.id)
-      } else if (type === 'upcoming') {
+      } else if (filter === 'upcoming') {
         query = query.upcoming()
-      } else if (type === 'recomended') {
+      } else if (filter === 'recomended') {
         const userPreferences = (await user.preferences().fetch())
           .toJSON()
           .map(preference => preference.id)
