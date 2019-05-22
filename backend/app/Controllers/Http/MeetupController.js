@@ -1,5 +1,6 @@
 'use strict'
 
+const Env = use('Env')
 const fs = use('fs')
 const Helpers = use('Helpers')
 
@@ -38,12 +39,7 @@ class MeetupController {
   }
 
   async store ({ request, auth: { user } }) {
-    const data = request.only([
-      'title',
-      'description',
-      'where',
-      'when'
-    ])
+    const data = request.only(['title', 'description', 'where', 'when'])
 
     const meetup = await Meetup.create({
       ...data,
@@ -63,7 +59,7 @@ class MeetupController {
       overwrite: true
     })
 
-    meetup.merge({ image: imageName })
+    meetup.merge({ image: `${Env.get('APP_URL')}/images/${imageName}` })
 
     await meetup.save()
 
@@ -86,7 +82,7 @@ class MeetupController {
       .where('id', params.id)
       .withCount('members')
       .with('themes')
-      .fetch()
+      .first()
 
     return meetup
   }
@@ -119,7 +115,10 @@ class MeetupController {
       overwrite: true
     })
 
-    meetup.merge({ ...data, image: imageName })
+    meetup.merge({
+      ...data,
+      image: `${Env.get('APP_URL')}/images/${imageName}`
+    })
 
     await meetup.save()
 
@@ -152,7 +151,11 @@ class MeetupController {
     }
 
     if (meetup.image) {
-      removeImage(`${Helpers.tmpPath('uploads')}/${meetup.image}`)
+      const imageFile = meetup.image.replace(
+        `${Env.get('APP_URL')}/images/`,
+        ''
+      )
+      removeImage(`${Helpers.tmpPath('uploads')}/${imageFile}`)
     }
 
     await meetup.delete()
