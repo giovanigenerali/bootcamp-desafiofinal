@@ -12,7 +12,7 @@ export default function Navbar() {
       <Nav>
         <ul>
           <li>
-            <NavLink to="/" exact>
+            <NavLink to="/dashboard" exact>
               Início
             </NavLink>
           </li>

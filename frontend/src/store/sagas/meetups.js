@@ -11,7 +11,7 @@ export function* newMeetup({ data }) {
   try {
     yield call(api.post, 'meetups', data);
     yield put(MeetupsActions.meetupNewSuccess());
-    yield put(push('/'));
+    yield put(push('/dashboard'));
   } catch (err) {
     yield put(
       toastrActions.add({

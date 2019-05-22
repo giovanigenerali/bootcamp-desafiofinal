@@ -41,7 +41,7 @@ export function* updateProfile({
     if (firstLogin) {
       localStorage.removeItem('@meetapp:first_login');
 
-      yield put(push('/'));
+      yield put(push('/dashboard'));
     } else {
       yield put(
         toastrActions.add({

@@ -10,7 +10,9 @@ import {
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import { MdCameraAlt, MdRemoveCircle } from 'react-icons/md';
+
 import ThemesActions from '../../../store/ducks/themes';
 import MeetupsActions from '../../../store/ducks/meetups';
 
@@ -21,7 +23,7 @@ import Themes from '../../../styles/components/Themes';
 import FileUpload from '../../../styles/components/FileUpload';
 import { Container } from './styles';
 
-import Navbar from '../../../components/Navbar';
+import Navbar from '../../../components/navbar';
 
 registerLocale('ptBR', ptBR);
 
@@ -229,14 +231,13 @@ class NewMeetup extends Component {
               onChange={this.handleInputChange}
             />
 
-            <label htmlFor="themes_id[]">Tema do meetup</label>
+            <span>Tema do meetup</span>
             <Themes>
               {themes.data.map(theme => (
                 <label key={theme.id}>
                   <Input
                     type="checkbox"
                     name="themes_id[]"
-                    id="themes_id[]"
                     value={theme.id}
                     checked={themesId.includes(String(theme.id))}
                     onChange={this.handleCheckboxChange}

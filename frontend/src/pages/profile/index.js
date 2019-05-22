@@ -15,7 +15,7 @@ import Themes from '../../styles/components/Themes';
 import Input from '../../styles/components/Input';
 import { Container, PreferencesIntro } from './styles';
 
-import Navbar from '../../components/Navbar';
+import Navbar from '../../components/navbar';
 
 class Profile extends Component {
   static propTypes = {

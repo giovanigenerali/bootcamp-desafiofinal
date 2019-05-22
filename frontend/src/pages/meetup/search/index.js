@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Container } from './styles';
 
-import Navbar from '../../../components/Navbar';
+import Navbar from '../../../components/navbar';
 
 function SearchMeetup() {
   return (

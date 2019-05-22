@@ -7,9 +7,17 @@ const Form = styled.form`
   padding: 0;
   min-width: 315px;
 
+  @media all and (max-width: 375px) {
+    min-width: 100%;
+  }
+
   label {
     font-weight: bold;
     cursor: pointer;
+  }
+
+  span {
+    font-weight: bold;
   }
 
   input[type='checkbox'] {

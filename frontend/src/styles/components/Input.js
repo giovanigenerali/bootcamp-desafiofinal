@@ -13,6 +13,10 @@ const Input = styled.input.attrs(() => ({
   &::placeholder {
     color: rgba(256, 256, 256, 0.6);
   }
+
+  @media all and (max-width: 768px) {
+    font-size: 1em;
+  }
 `;
 
 export default Input;

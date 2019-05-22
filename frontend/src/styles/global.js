@@ -61,17 +61,33 @@ export default createGlobalStyle`
   .react-datepicker-wrapper {
     margin: 10px 0 40px 0;
 
+    @media all and (max-width: 768px) {
+      display: flex;
+    }
+
     input {
-    color: #fff;
-    font-size: 20px;
-    border: 1px solid transparent;
-    background: transparent !important;
-    padding: 0;
-    min-width: 315px;
+      color: #fff;
+      font-size: 20px;
+      border: 1px solid transparent;
+      background: transparent !important;
+      padding: 0;
+      min-width: 315px;
+
+      @media all and (max-width: 768px) {
+        font-size: 1em;
+        /* min-width: unset;
+        width: 100%; */
+      }
 
       &::placeholder {
         color: rgba(256, 256, 256, 0.6);
       }
+    }
+  }
+
+  .react-datepicker__input-container {
+    @media all and (max-width: 768px) {
+      display: flex !important;
     }
   }
 

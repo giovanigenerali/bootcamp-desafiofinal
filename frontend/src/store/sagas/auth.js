@@ -15,7 +15,7 @@ export function* signIn({ email, password }) {
 
     const firstLogin = !!localStorage.getItem('@meetapp:first_login');
 
-    yield put(push(firstLogin ? '/profile' : '/'));
+    yield put(push(firstLogin ? '/profile' : '/dashboard'));
   } catch (err) {
     yield put(
       toastrActions.add({

@@ -8,8 +8,19 @@ export const Container = styled.div`
   padding: 26px;
   background: #e5556e;
 
+  @media all and (max-width: 375px) {
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+  }
+
   img {
     margin-right: 30px;
+
+    @media all and (max-width: 375px) {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
   }
 `;
 
@@ -19,21 +30,33 @@ export const Nav = styled.nav`
   justify-content: space-between;
   height: 16px;
 
+  @media all and (max-width: 375px) {
+    width: 100%;
+  }
+
   ul {
     display: flex;
     list-style: none;
     align-items: center;
     list-style: none;
 
-    &:last-child {
-      li {
-        margin-right: 0;
+    @media all and (max-width: 375px) {
+      &:last-child {
+        margin-left: 10px;
       }
     }
   }
 
   li {
     margin-right: 30px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    @media all and (max-width: 375px) {
+      margin-right: 20px;
+    }
   }
 
   a {
