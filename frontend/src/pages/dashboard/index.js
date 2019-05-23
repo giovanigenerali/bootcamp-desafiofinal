@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -104,7 +103,7 @@ class Dashboard extends Component {
             )}
             {!loading && meetupsRecomended.data && meetupsRecomended.data.length === 0 && (
               <div style={{ marginBottom: 40, color: 'rgba(255, 255, 255, 0.8)' }}>
-                Não existe nenhum meetup que corresponde às suas preferências.
+                Nenhum meetup recomendado para você no momento.
               </div>
             )}
           </MeetupContainer>
