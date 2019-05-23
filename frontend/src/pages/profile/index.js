@@ -118,7 +118,7 @@ class Profile extends Component {
 
     return (
       <>
-        <Navbar />
+        {!firstLogin && <Navbar /> }
         <Container>
           {!loading && (
             <>

@@ -13,9 +13,16 @@ export function* signIn({ email, password }) {
 
     yield put(AuthActions.signInSuccess(response.data.token));
 
-    const firstLogin = !!localStorage.getItem('@meetapp:first_login');
+    const user = yield call(api.get, 'profile');
+    const { preferences } = user.data;
 
-    yield put(push(firstLogin ? '/profile' : '/dashboard'));
+    if (preferences.length === 0) {
+      localStorage.setItem('@meetapp:first_login', true);
+      yield put(push('/profile'));
+    } else {
+      localStorage.removeItem('@meetapp:first_login');
+      yield put(push('/dashboard'));
+    }
   } catch (err) {
     yield put(
       toastrActions.add({
@@ -33,13 +40,18 @@ export function* signIn({ email, password }) {
 
 export function* signUp({ name, email, password }) {
   try {
-    yield call(api.post, 'users', { name, email, password });
+    const user = yield call(api.post, 'users', { name, email, password });
 
     const response = yield call(api.post, 'sessions', { email, password });
     localStorage.setItem('@meetapp:token', response.data.token);
-    localStorage.setItem('@meetapp:first_login', true);
 
     yield put(AuthActions.signUpSuccess(response.data.token));
+
+    if (!user.preferences) {
+      localStorage.setItem('@meetapp:first_login', true);
+    } else {
+      localStorage.removeItem('@meetapp:first_login');
+    }
 
     yield put(push('/profile'));
   } catch (err) {

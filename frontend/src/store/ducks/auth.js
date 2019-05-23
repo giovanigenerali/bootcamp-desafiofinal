@@ -29,6 +29,7 @@ export const success = (state, { token }) => state.merge({ signedIn: true, token
 
 export const logout = (state) => {
   localStorage.removeItem('@meetapp:token');
+  localStorage.removeItem('@meetapp:first_login');
   return state.merge({ signedIn: false, token: null });
 };
 
