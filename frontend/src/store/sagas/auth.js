@@ -1,4 +1,4 @@
-import { call, put } from 'redux-saga/effects';
+import { all, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import { actions as toastrActions } from 'react-redux-toastr';
 
@@ -22,6 +22,10 @@ export function* signIn({ email, password }) {
         type: 'error',
         title: 'Falha no login',
         message: 'Verifique seu e-mail/senha.',
+        options: {
+          showCloseButton: true,
+          timeOut: 2500,
+        },
       }),
     );
   }
@@ -39,12 +43,17 @@ export function* signUp({ name, email, password }) {
 
     yield put(push('/profile'));
   } catch (err) {
-    yield put(
-      toastrActions.add({
-        type: 'error',
-        title: 'Falha ao criar conta',
-        message: 'Verifique seu nome, e-mail e senha.',
-      }),
+    yield all(
+      err.response.data.map(error => put(
+        toastrActions.add({
+          type: 'error',
+          title: 'Falha ao criar conta',
+          message: error.message,
+          options: {
+            showCloseButton: true,
+          },
+        }),
+      )),
     );
   }
 }
