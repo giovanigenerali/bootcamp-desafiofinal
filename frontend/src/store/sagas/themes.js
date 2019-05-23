@@ -15,7 +15,11 @@ export function* loadThemes() {
       toastrActions.add({
         type: 'error',
         title: 'Atenção',
-        message: 'Erro ao carregar a lista de temas para meetup',
+        message: 'Erro ao carregar a lista de temas para meetup.',
+        options: {
+          showCloseButton: true,
+          timeOut: 2500,
+        },
       }),
     );
   }

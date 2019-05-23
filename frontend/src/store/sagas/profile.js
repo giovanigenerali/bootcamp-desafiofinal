@@ -17,7 +17,11 @@ export function* loadProfile() {
       toastrActions.add({
         type: 'error',
         title: 'Atenção',
-        message: 'Erro ao carregar suas informações',
+        message: 'Erro ao carregar suas informações.',
+        options: {
+          showCloseButton: true,
+          timeOut: 2500,
+        },
       }),
     );
   }
@@ -48,6 +52,10 @@ export function* updateProfile({
           type: 'success',
           title: 'Sucesso',
           message: 'As informações do seu perfil foram atualizadas.',
+          options: {
+            showCloseButton: true,
+            timeOut: 2500,
+          },
         }),
       );
     }
@@ -56,7 +64,11 @@ export function* updateProfile({
       toastrActions.add({
         type: 'error',
         title: 'Atenção',
-        message: 'Erro ao atualizar suas informações',
+        message: 'Erro ao atualizar suas informações.',
+        options: {
+          showCloseButton: true,
+          timeOut: 2500,
+        },
       }),
     );
   }
