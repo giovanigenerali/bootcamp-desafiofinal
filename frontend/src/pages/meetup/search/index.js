@@ -92,7 +92,7 @@ class Search extends Component {
               <MdRemoveCircleOutline
                 className="searchClear"
                 onClick={this.handleClearSearch}
-                size={24}
+                size={20}
               />
             )}
           </MeetupSearch>
@@ -102,7 +102,15 @@ class Search extends Component {
               <div style={{ marginTop: 20, marginBottom: 20, color: 'rgba(255, 255, 255, 0.8)' }}>
                 {total > 1 ? 'Foram encontrados' : 'Foi encontrato'}
                 {' '}
-                <strong style={{ backgroundColor: '#e5556e', paddingLeft: 4, paddingRight: 4 }}>
+                <strong
+                  style={{
+                    fontSize: 14,
+                    borderRadius: 4,
+                    backgroundColor: '#e5556e',
+                    paddingLeft: 4,
+                    paddingRight: 4,
+                  }}
+                >
                   {total}
                 </strong>
                 {' '}
@@ -128,7 +136,16 @@ class Search extends Component {
               <div style={{ marginTop: 20, marginBottom: 20, color: 'rgba(255, 255, 255, 0.8)' }}>
                 Nenhum meetup encontrado com o título:
                 {' '}
-                <strong style={{ backgroundColor: '#e5556e', paddingLeft: 4, paddingRight: 4 }}>
+                <strong
+                  style={{
+                    fontSize: 14,
+                    borderRadius: 3,
+                    backgroundColor: '#e5556e',
+                    paddingLeft: 4,
+                    paddingRight: 4,
+                    marginLeft: 4,
+                  }}
+                >
                   {search}
                 </strong>
               </div>
