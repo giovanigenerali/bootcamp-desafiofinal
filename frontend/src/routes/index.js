@@ -13,6 +13,7 @@ import Signup from '../pages/auth/signup';
 import Logout from '../pages/auth/logout';
 import SearchMeetup from '../pages/meetup/search';
 import NewMeetup from '../pages/meetup/new';
+import DetailsMeetup from '../pages/meetup/details';
 import Profile from '../pages/profile';
 
 function Routes() {
@@ -22,10 +23,11 @@ function Routes() {
         <Guest path="/signin" component={Signin} />
         <Guest path="/signup" component={Signup} />
         <Private path="/logout" component={Logout} />
-        <Private path="/meetups/search" exact component={SearchMeetup} />
-        <Private path="/meetups/new" exact component={NewMeetup} />
-        <Private path="/profile" exact component={Profile} />
-        <Private path="/dashboard" extact component={Dashboard} />
+        <Private path="/meetups/search" component={SearchMeetup} />
+        <Private path="/meetups/new" component={NewMeetup} />
+        <Private path="/meetups/details/:id" component={DetailsMeetup} />
+        <Private path="/profile" component={Profile} />
+        <Private path="/dashboard" component={Dashboard} />
         <Route component={() => <Redirect to="/dashboard" />} />
       </Switch>
     </ConnectedRouter>

@@ -13,6 +13,9 @@ import {
   filterMeetupUpcoming,
   filterMeetupRecomended,
   searchMeetup,
+  detailsMeetup,
+  subscribeMeetup,
+  unsubscribeMeetup,
 } from './meetups';
 
 import { ProfileTypes } from '../ducks/profile';
@@ -37,6 +40,9 @@ export default function* rootSaga() {
       filter: 'recomended',
     }),
     takeLatest(MeetupsTypes.MEETUP_SEARCH_REQUEST, searchMeetup),
+    takeLatest(MeetupsTypes.MEETUP_DETAILS_REQUEST, detailsMeetup),
+    takeLatest(MeetupsTypes.MEETUP_SUBSCRIBE_REQUEST, subscribeMeetup),
+    takeLatest(MeetupsTypes.MEETUP_UNSUBSCRIBE_REQUEST, unsubscribeMeetup),
 
     takeLatest(ProfileTypes.LOAD_PROFILE_REQUEST, loadProfile),
     takeLatest(ProfileTypes.UPDATE_PROFILE_REQUEST, updateProfile),
