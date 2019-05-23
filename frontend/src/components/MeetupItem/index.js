@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 
 import { MdChevronRight } from 'react-icons/md';
@@ -8,6 +9,7 @@ import {
   MeetupImage,
   MeetupInfoWrapper,
   MeetupInfo,
+  MeetupWhen,
   MeetupTitle,
   MeetupMemebers,
   MeetupButtonDetails,
@@ -19,33 +21,14 @@ export default function MeetupItem({ meetup }) {
       <MeetupImage src={meetup.image} alt={meetup.title} />
       <MeetupInfoWrapper>
         <MeetupInfo>
+          <MeetupWhen>{moment(meetup.when).format('DD/MM/YY [às] HH:mm')}</MeetupWhen>
           <MeetupTitle>{meetup.title}</MeetupTitle>
           <MeetupMemebers>
-            {parseInt(meetup.__meta__.members_count, 10).length > 0
-              ? `${meetup.__meta__.members_count} membros`
+            {parseInt(meetup.__meta__.members_count, 10) > 0
+              ? `${meetup.__meta__.members_count} membro${
+                parseInt(meetup.__meta__.members_count, 10) > 1 ? 's' : ''}`
               : 'Incrições abertas'}
           </MeetupMemebers>
-          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            {meetup.themes.map(theme => (
-              <span
-                style={{
-                  fontSize: 11,
-                  color: '#fff',
-                  paddingTop: 4,
-                  paddingRight: 8,
-                  paddingBottom: 4,
-                  paddingLeft: 8,
-                  backgroundColor: '#534c56',
-                  borderRadius: 10,
-                  marginRight: 6,
-                  marginTop: 6,
-                }}
-                key={theme.id}
-              >
-                {theme.title.toLowerCase()}
-              </span>
-            ))}
-          </div>
         </MeetupInfo>
         <MeetupButtonDetails to={`/meetups/details/${meetup.id}`} title="Detalhes do meetup">
           <MdChevronRight size={20} color="#fff" />

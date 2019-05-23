@@ -27,7 +27,7 @@ export const MeetupInfoWrapper = styled.div`
   padding: 20px;
   background: #fff;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   border-bottom-right-radius: 4px;
   border-bottom-left-radius: 4px;
 `;
@@ -40,14 +40,17 @@ export const MeetupInfo = styled.div`
   max-width: 190px;
 `;
 
+export const MeetupWhen = styled.span`
+  color: #e5556e;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 6px;
+`;
+
 export const MeetupTitle = styled.span`
   color: #222;
   font-size: 16px;
   font-weight: bold;
-  width: 190px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
 `;
 
 export const MeetupMemebers = styled.span`
