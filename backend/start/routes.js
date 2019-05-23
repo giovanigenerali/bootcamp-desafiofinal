@@ -24,8 +24,8 @@ Route.group(() => {
     )
 
   Route.get('themes', 'ThemeController.index')
-  Route.post('meetups/:id/subscriber', 'MeetupSubscriberController.store')
-  Route.delete('meetups/:id/unsubscriber', 'MeetupSubscriberController.delete')
+  Route.post('meetups/:id/subscribe', 'MeetupSubscribeController.store')
+  Route.delete('meetups/:id/unsubscribe', 'MeetupSubscribeController.delete')
 }).middleware('auth')
 
 Route.get('images/:path', 'ImageController.show')

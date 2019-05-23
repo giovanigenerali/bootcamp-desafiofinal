@@ -1,10 +1,10 @@
 'use strict'
 
-const MeetupSubscriber = use('App/Models/MeetupSubscriber')
+const MeetupSubscribe = use('App/Models/MeetupSubscribe')
 
-class MeetupSubscriberController {
+class MeetupSubscribeControlle {
   async store ({ params, response, auth: { user } }) {
-    const subscribed = await MeetupSubscriber.query()
+    const subscribed = await MeetupSubscribe.query()
       .where('meetup_id', params.id)
       .where('user_id', user.id)
       .first()
@@ -17,19 +17,19 @@ class MeetupSubscriberController {
       })
     }
 
-    await MeetupSubscriber.create({
+    await MeetupSubscribe.create({
       meetup_id: params.id,
       user_id: user.id
     })
   }
 
   async delete ({ params, response, auth: { user } }) {
-    const unsubscribed = await MeetupSubscriber.query()
+    const subscription = await MeetupSubscribe.query()
       .where('meetup_id', params.id)
       .where('user_id', user.id)
       .first()
 
-    if (!unsubscribed) {
+    if (!subscription) {
       return response.status(406).send({
         error: {
           message:
@@ -38,8 +38,8 @@ class MeetupSubscriberController {
       })
     }
 
-    await unsubscribed.delete()
+    await subscription.delete()
   }
 }
 
-module.exports = MeetupSubscriberController
+module.exports = MeetupSubscribeControlle

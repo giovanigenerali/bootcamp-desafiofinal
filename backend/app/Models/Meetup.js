@@ -13,10 +13,13 @@ class Meetup extends Model {
     return query.where('when', '>', 'now()').orderBy('when', 'asc')
   }
 
-  static scopeRecomended (query, userPreferences) {
+  static scopeRecomended (query, userId, userPreferences) {
     query = query
       .whereHas('themes', builder => {
         builder.whereIn('theme_id', userPreferences)
+      })
+      .whereDoesntHave('members', builder => {
+        builder.where('user_id', userId)
       })
       .orderBy('when', 'asc')
   }
@@ -26,9 +29,11 @@ class Meetup extends Model {
   }
 
   members () {
-    return this.belongsToMany('App/Models/User').pivotTable(
-      'meetup_subscribers'
-    )
+    return this.belongsToMany('App/Models/User').pivotTable('meetup_subscribes')
+  }
+
+  user () {
+    return this.belongsTo('App/Models/User')
   }
 }
 

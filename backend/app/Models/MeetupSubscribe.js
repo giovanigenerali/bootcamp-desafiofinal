@@ -2,11 +2,12 @@
 
 const Model = use('Model')
 
-class MeetupSubscriber extends Model {
+class MeetupSubscribe extends Model {
   static boot () {
     super.boot()
 
     this.addHook('afterCreate', 'MeetupSubscriptionHook.sendMail')
+    this.addHook('afterDelete', 'MeetupCancelSubscriptionHook.sendMail')
   }
 
   meetup () {
@@ -18,4 +19,4 @@ class MeetupSubscriber extends Model {
   }
 }
 
-module.exports = MeetupSubscriber
+module.exports = MeetupSubscribe

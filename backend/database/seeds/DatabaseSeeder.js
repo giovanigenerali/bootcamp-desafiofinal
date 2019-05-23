@@ -2,7 +2,7 @@
 
 const Theme = use('App/Models/Theme')
 const User = use('App/Models/User')
-const MeetupSubscriber = use('App/Models/MeetupSubscriber')
+const MeetupSubscribe = use('App/Models/MeetupSubscribe')
 
 class DatabaseSeeder {
   async run () {
@@ -52,7 +52,7 @@ class DatabaseSeeder {
     await member.preferences().attach([themes[0].id])
 
     /** Subscriber user to meetup */
-    await MeetupSubscriber.create({
+    await MeetupSubscribe.create({
       meetup_id: meetup.id,
       user_id: member.id
     })
