@@ -29,7 +29,7 @@ class MeetupController {
         const userPreferences = (await user.preferences().fetch())
           .toJSON()
           .map(preference => preference.id)
-        query = query.recomended(userPreferences)
+        query = query.recomended(user.id, userPreferences)
       }
     }
 
@@ -77,12 +77,26 @@ class MeetupController {
     return meetupNew
   }
 
-  async show ({ params }) {
+  async show ({ params, response, auth: { user } }) {
     const meetup = await Meetup.query()
       .where('id', params.id)
       .withCount('members')
+      .with('members')
       .with('themes')
+      .with('user')
       .first()
+
+    if (!meetup) {
+      return response.status(404).send({
+        error: {
+          message: 'Meetup não encontrado.'
+        }
+      })
+    }
+
+    meetup.subscribed = meetup.toJSON().members
+      ? !!meetup.toJSON().members.find(member => member.id === user.id)
+      : false
 
     return meetup
   }
