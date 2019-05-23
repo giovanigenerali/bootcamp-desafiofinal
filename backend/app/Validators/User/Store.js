@@ -9,9 +9,9 @@ class Store {
 
   get rules () {
     return {
-      name: 'required|unique:users,name',
+      name: 'required',
       email: 'required|email|unique:users,email',
-      password: 'required'
+      password: 'required|min:6'
     }
   }
 
