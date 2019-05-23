@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { toastr } from 'react-redux-toastr';
 import moment from 'moment';
+import { toastr } from 'react-redux-toastr';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { ptBR } from 'date-fns/locale';
 import {
   addDays, setHours, setMinutes, setSeconds,
 } from 'date-fns/fp';
+import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -18,6 +18,7 @@ import MeetupsActions from '../../../store/ducks/meetups';
 
 import Form from '../../../styles/components/Form';
 import Input from '../../../styles/components/Input';
+import Textarea from '../../../styles/components/Textarea';
 import Button from '../../../styles/components/Button';
 import Themes from '../../../styles/components/Themes';
 import FileUpload from '../../../styles/components/FileUpload';
@@ -56,6 +57,15 @@ class NewMeetup extends Component {
 
   handleDatepicker = (date) => {
     this.setState({ when: date });
+
+    if (date && moment(date).isSameOrBefore(new Date(), 'minute')) {
+      toastr.error('Atenção', 'A data do meetup deve ser maior que a data atual.', {
+        showCloseButton: true,
+        timeOut: 2500,
+      });
+      this.setState({ when: '' });
+      return;
+    }
   };
 
   handleInputChange = (event) => {
@@ -86,13 +96,19 @@ class NewMeetup extends Component {
     }
 
     if (mimeTypes.indexOf(file.type) === -1) {
-      toastr.error('Atenção', 'O tipo de arquivo não é permitido.');
+      toastr.error('Atenção', 'O tipo de arquivo não é permitido.', {
+        showCloseButton: true,
+        timeOut: 2500,
+      });
       this.handleFileCleanup();
       return;
     }
 
     if (file.size > 2 * 1024 * 1024) {
-      toastr.error('Atenção', 'O tamanho da imagem é maior que 2mb.');
+      toastr.error('Atenção', 'O tamanho da imagem é maior que 2mb.', {
+        showCloseButton: true,
+        timeOut: 2500,
+      });
       this.handleFileCleanup();
       return;
     }
@@ -116,12 +132,18 @@ class NewMeetup extends Component {
     const { meetupNewRequest } = this.props;
 
     if (!file) {
-      toastr.warning('Atenção', 'Escolha uma imagem para o meetup');
+      toastr.warning('Atenção', 'Escolha uma imagem para o meetup', {
+        showCloseButton: true,
+        timeOut: 2500,
+      });
       return;
     }
 
     if (themesId.length === 0) {
-      toastr.warning('Atenção', 'Escolha um tema para o meetup');
+      toastr.warning('Atenção', 'Escolha um tema para o meetup', {
+        showCloseButton: true,
+        timeOut: 2500,
+      });
       return;
     }
 
@@ -161,7 +183,7 @@ class NewMeetup extends Component {
             />
 
             <label htmlFor="description">Descrição</label>
-            <Input
+            <Textarea
               type="text"
               name="description"
               id="description"
@@ -170,7 +192,7 @@ class NewMeetup extends Component {
               value={description}
               required
               onChange={this.handleInputChange}
-            />
+            >{description}</Textarea>
 
             <label htmlFor="when">Data/hora</label>
             <DatePicker

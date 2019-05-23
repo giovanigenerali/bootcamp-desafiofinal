@@ -90,12 +90,18 @@ class Profile extends Component {
     } = this.state;
 
     if (password && password !== passwordConfirmation) {
-      toastr.warning('Atenção', 'Confirme sua senha');
+      toastr.warning('Atenção', 'Confirme sua senha', {
+        showCloseButton: true,
+        timeOut: 2500,
+      });
       return;
     }
 
     if (preferencesId.length === 0) {
-      toastr.warning('Atenção', 'Escolha uma preferência');
+      toastr.warning('Atenção', 'Escolha uma preferência', {
+        showCloseButton: true,
+        timeOut: 2500,
+      });
       return;
     }
 
