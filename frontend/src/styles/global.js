@@ -94,40 +94,36 @@ export default createGlobalStyle`
   .react-datepicker__header {
     background-color: #3a3740 !important;
     border-radius: unset !important;
+
+    .react-datepicker__current-month, .react-datepicker-time__header, .react-datepicker-year-header {
+      color: #fff;
+    }
+
+    .react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name {
+      color: #fff;
+    }
   }
 
-  .react-datepicker__day, .react-datepicker__month-text {
-    color: #22202c !important;
+  .react-datepicker__day--selected {
+    background: #e5556e !important;
+    color: #fff !important;
   }
-
-  .react-datepicker__current-month, .react-datepicker-time__header, .react-datepicker-year-header {
+  .react-datepicker__day--keyboard-selected, .react-datepicker__month-text--keyboard-selected {
+    background: #e5556e !important;
     color: #fff !important;
   }
 
-  .react-datepicker__day--keyboard-selected, .react-datepicker__month-text--keyboard-selected,
   .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected {
     background: #e5556e !important;
     color: #fff !important;
   }
 
-  .react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range, .react-datepicker__month-text--selected, .react-datepicker__month-text--in-selecting-range, .react-datepicker__month-text--in-range {
-    background: #e5556e !important;
-    color: #fff !important;
-  }
-
-  .react-datepicker__day--keyboard-selected, .react-datepicker__month-text--keyboard-selected {
-    color: #fff !important;
-  }
-
-  .react-datepicker__day--disabled, .react-datepicker__month-text--disabled {
-    color: #9e9e9e !important;
-  }
-
-  .react-datepicker__day-name {
-    color: #fff !important;
-  }
-
   .react-datepicker__day--today {
     color: #e5556e !important;
+  }
+
+  .react-datepicker__day--selected {
+    background: #e5556e !important;
+    color: #fff !important;
   }
 `;
