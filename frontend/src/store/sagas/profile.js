@@ -20,7 +20,7 @@ export function* loadProfile() {
         message: 'Erro ao carregar suas informações.',
         options: {
           showCloseButton: true,
-          timeOut: 2500,
+          timeOut: 3500,
         },
       }),
     );
@@ -54,12 +54,13 @@ export function* updateProfile({
           message: 'As informações do seu perfil foram atualizadas.',
           options: {
             showCloseButton: true,
-            timeOut: 2500,
+            timeOut: 3500,
           },
         }),
       );
     }
   } catch (err) {
+    yield put(ProfileActions.updateProfileFailed());
     yield put(
       toastrActions.add({
         type: 'error',
@@ -67,7 +68,7 @@ export function* updateProfile({
         message: 'Erro ao atualizar suas informações.',
         options: {
           showCloseButton: true,
-          timeOut: 2500,
+          timeOut: 3500,
         },
       }),
     );

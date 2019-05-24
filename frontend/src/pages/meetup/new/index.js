@@ -37,6 +37,7 @@ class NewMeetup extends Component {
       id: PropTypes.string,
       title: PropTypes.string,
     }).isRequired,
+    submittingNewMeetup: PropTypes.bool.isRequired,
   };
 
   state = {
@@ -62,7 +63,7 @@ class NewMeetup extends Component {
     if (date && moment(date).isSameOrBefore(new Date(), 'minute')) {
       toastr.error('Atenção', 'A data do meetup deve ser maior que a data atual.', {
         showCloseButton: true,
-        timeOut: 2500,
+        timeOut: 3500,
       });
       this.setState({ when: '' });
       return;
@@ -99,7 +100,7 @@ class NewMeetup extends Component {
     if (mimeTypes.indexOf(file.type) === -1) {
       toastr.error('Atenção', 'O tipo de arquivo não é permitido.', {
         showCloseButton: true,
-        timeOut: 2500,
+        timeOut: 3500,
       });
       this.handleFileCleanup();
       return;
@@ -108,7 +109,7 @@ class NewMeetup extends Component {
     if (file.size > 2 * 1024 * 1024) {
       toastr.error('Atenção', 'O tamanho da imagem é maior que 2mb.', {
         showCloseButton: true,
-        timeOut: 2500,
+        timeOut: 3500,
       });
       this.handleFileCleanup();
       return;
@@ -135,7 +136,7 @@ class NewMeetup extends Component {
     if (!file) {
       toastr.warning('Atenção', 'Escolha uma imagem para o meetup', {
         showCloseButton: true,
-        timeOut: 2500,
+        timeOut: 3500,
       });
       return;
     }
@@ -143,7 +144,7 @@ class NewMeetup extends Component {
     if (themesId.length === 0) {
       toastr.warning('Atenção', 'Escolha um tema para o meetup', {
         showCloseButton: true,
-        timeOut: 2500,
+        timeOut: 3500,
       });
       return;
     }
@@ -164,7 +165,7 @@ class NewMeetup extends Component {
       title, description, when, where, themesId, file, imagePreview, fileKey,
     } = this.state;
 
-    const { themes } = this.props;
+    const { submittingNewMeetup, themes } = this.props;
 
     return (
       <>
@@ -272,7 +273,13 @@ class NewMeetup extends Component {
               ))}
             </Themes>
 
-            <Button type="submit">Salvar</Button>
+            {submittingNewMeetup ? (
+              <Button type="submit" disabled={submittingNewMeetup}>
+                Aguarde...
+              </Button>
+            ) : (
+              <Button type="submit">Salvar</Button>
+            )}
           </Form>
         </Container>
       </>
@@ -282,6 +289,7 @@ class NewMeetup extends Component {
 
 const mapStateToProps = state => ({
   themes: state.themes,
+  submittingNewMeetup: state.meetups.submittingNewMeetup,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(

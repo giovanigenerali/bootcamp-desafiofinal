@@ -34,6 +34,7 @@ class Profile extends Component {
       title: PropTypes.string,
     }).isRequired,
     loadingProfile: PropTypes.bool.isRequired,
+    submittingProfile: PropTypes.bool.isRequired,
     loadingThemes: PropTypes.bool.isRequired,
   };
 
@@ -59,7 +60,7 @@ class Profile extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.loadingProfile) {
+    if (!nextProps.loadingProfile && !nextProps.submittingProfile) {
       const { profile } = nextProps;
       if (profile.data) {
         const { name, preferences } = profile.data;
@@ -99,7 +100,7 @@ class Profile extends Component {
     if (password && password !== passwordConfirmation) {
       toastr.warning('Atenção', 'Confirme sua senha', {
         showCloseButton: true,
-        timeOut: 2500,
+        timeOut: 3500,
       });
       return;
     }
@@ -107,7 +108,7 @@ class Profile extends Component {
     if (preferencesId.length === 0) {
       toastr.warning('Atenção', 'Escolha uma preferência', {
         showCloseButton: true,
-        timeOut: 2500,
+        timeOut: 3500,
       });
       return;
     }
@@ -118,7 +119,7 @@ class Profile extends Component {
   };
 
   render() {
-    const { loadingThemes, themes } = this.props;
+    const { submittingProfile, loadingThemes, themes } = this.props;
     const {
       name,
       password,
@@ -207,7 +208,13 @@ class Profile extends Component {
                   </Themes>
                 )}
 
-                <Button type="submit">{firstLogin ? 'Continuar' : 'Salvar'}</Button>
+                {submittingProfile ? (
+                  <Button type="submit" disabled={submittingProfile}>
+                    Aguarde...
+                  </Button>
+                ) : (
+                  <Button type="submit">{firstLogin ? 'Continuar' : 'Salvar'}</Button>
+                )}
               </Form>
 
               <Link to="/logout">Sair</Link>
@@ -224,6 +231,7 @@ const mapStateToProps = state => ({
   loadingThemes: state.themes.loading,
   profile: state.profile,
   loadingProfile: state.profile.loading,
+  submittingProfile: state.profile.submitting,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(

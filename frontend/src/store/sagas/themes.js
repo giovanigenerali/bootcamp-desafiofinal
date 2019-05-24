@@ -18,7 +18,7 @@ export function* loadThemes() {
         message: 'Erro ao carregar a lista de temas para meetup.',
         options: {
           showCloseButton: true,
-          timeOut: 2500,
+          timeOut: 3500,
         },
       }),
     );

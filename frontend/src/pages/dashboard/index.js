@@ -68,6 +68,9 @@ class Dashboard extends Component {
               && meetupsSubscribed.data.length === 0 && (
                 <Message>Você não está inscrito em nenhum meetup.</Message>
             )}
+            {!loadingMeetupsSubscribed && !meetupsSubscribed.data && (
+              <Message>Não foi possível verificar suas inscrições.</Message>
+            )}
 
             <MeetupContainerTitle>Próximos meetups</MeetupContainerTitle>
             {loadingMeetupsUpcoming && <Loading>Carregando...</Loading>}
@@ -85,6 +88,9 @@ class Dashboard extends Component {
               && meetupsUpcoming.data
               && meetupsUpcoming.data.length === 0 && (
                 <Message>Não existe nenhum meetup para os próximos dias</Message>
+            )}
+            {!loadingMeetupsUpcoming && !meetupsSubscribed.data && (
+              <Message>Não foi possível carregar os próximos.</Message>
             )}
 
             <MeetupContainerTitle>Recomendados</MeetupContainerTitle>
@@ -105,6 +111,9 @@ class Dashboard extends Component {
               && meetupsRecomended.data
               && meetupsRecomended.data.length === 0 && (
                 <Message>Nenhum meetup recomendado para você no momento.</Message>
+            )}
+            {!loadingMeetupsRecomended && !meetupsSubscribed.data && (
+              <Message>Não foi possível verificar os meetups recomendados para você.</Message>
             )}
           </MeetupContainer>
         </Container>

@@ -31,7 +31,7 @@ export function* signIn({ email, password }) {
         message: 'Verifique seu e-mail/senha.',
         options: {
           showCloseButton: true,
-          timeOut: 2500,
+          timeOut: 3500,
         },
       }),
     );

@@ -43,6 +43,8 @@ class DetailsMeetup extends Component {
       }),
     }).isRequired,
     loadingMeetupDetails: PropTypes.bool.isRequired,
+    submittingSubscribeMeetup: PropTypes.bool.isRequired,
+    submittingUnsubscribeMeetup: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -85,7 +87,11 @@ class DetailsMeetup extends Component {
   };
 
   render() {
-    const { loadingMeetupDetails } = this.props;
+    const {
+      loadingMeetupDetails,
+      submittingSubscribeMeetup,
+      submittingUnsubscribeMeetup,
+    } = this.props;
     const { meetup, notFound } = this.state;
 
     return (
@@ -118,14 +124,31 @@ class DetailsMeetup extends Component {
                 </MeetupInfoText>
                 <MeetupInfoLabel>Organizado por:</MeetupInfoLabel>
                 <MeetupInfoText>{meetup.user.name}</MeetupInfoText>
+
                 {!meetup.subscribed ? (
-                  <Button type="button" onClick={() => this.handleSubscription()}>
-                    Inscreva-se
-                  </Button>
+                  <>
+                    {submittingSubscribeMeetup ? (
+                      <Button type="button" disabled={submittingSubscribeMeetup}>
+                        Aguarde...
+                      </Button>
+                    ) : (
+                      <Button type="button" onClick={() => this.handleSubscription()}>
+                        Inscreva-se
+                      </Button>
+                    )}
+                  </>
                 ) : (
-                  <Button type="button" onClick={() => this.handleUnsubscription()}>
-                    Cancelar inscrição
-                  </Button>
+                  <>
+                    {submittingUnsubscribeMeetup ? (
+                      <Button type="button" disabled={submittingUnsubscribeMeetup}>
+                        Aguarde...
+                      </Button>
+                    ) : (
+                      <Button type="button" onClick={() => this.handleUnsubscription()}>
+                        Cancelar inscrição
+                      </Button>
+                    )}
+                  </>
                 )}
               </MeetupInfoWrapper>
             </MeetupContainer>
@@ -139,6 +162,8 @@ class DetailsMeetup extends Component {
 const mapStateToProps = state => ({
   loadingMeetupDetails: state.meetups.loadingMeetupDetails,
   meetup: state.meetups.meetup,
+  submittingSubscribeMeetup: state.meetups.submittingSubscribeMeetup,
+  submittingUnsubscribeMeetup: state.meetups.submittingUnsubscribeMeetup,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(MeetupsActions, dispatch);

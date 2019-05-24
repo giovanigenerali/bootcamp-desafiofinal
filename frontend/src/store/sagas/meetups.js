@@ -9,9 +9,11 @@ import MeetupsActions from '../ducks/meetups';
 export function* newMeetup({ data }) {
   try {
     yield call(api.post, 'meetups', data);
+
     yield put(MeetupsActions.meetupNewSuccess());
     yield put(push('/dashboard'));
   } catch (err) {
+    yield put(MeetupsActions.meetupNewFailed());
     yield put(
       toastrActions.add({
         type: 'error',
@@ -19,7 +21,7 @@ export function* newMeetup({ data }) {
         message: 'Ocorreu um erro ao criar o meetup.',
         options: {
           showCloseButton: true,
-          timeOut: 2500,
+          timeOut: 3500,
         },
       }),
     );
@@ -38,6 +40,14 @@ export function* filterMeetup({ filter }) {
       yield put(MeetupsActions.meetupRecomendedSuccess(response.data));
     }
   } catch (err) {
+    if (filter === 'subscribed') {
+      yield put(MeetupsActions.meetupSubscribedFailed());
+    } else if (filter === 'upcoming') {
+      yield put(MeetupsActions.meetupUpcomingFailed());
+    } else if (filter === 'recomended') {
+      yield put(MeetupsActions.meetupRecomendedFailed());
+    }
+
     yield put(
       toastrActions.add({
         type: 'error',
@@ -45,67 +55,7 @@ export function* filterMeetup({ filter }) {
         message: 'Erro ao carregar os meetups.',
         options: {
           showCloseButton: true,
-          timeOut: 2500,
-        },
-      }),
-    );
-  }
-}
-
-export function* filterMeetupSubscribed({ filter }) {
-  try {
-    const response = yield call(api.get, `meetups?filter=${filter}`);
-
-    yield put(MeetupsActions.meetupSubscribedSuccess(response.data));
-  } catch (err) {
-    yield put(
-      toastrActions.add({
-        type: 'error',
-        title: 'Atenção',
-        message: 'Erro ao carregar os meetups.',
-        options: {
-          showCloseButton: true,
-          timeOut: 2500,
-        },
-      }),
-    );
-  }
-}
-
-export function* filterMeetupUpcoming({ filter }) {
-  try {
-    const response = yield call(api.get, `meetups?filter=${filter}`);
-
-    yield put(MeetupsActions.meetupUpcomingSuccess(response.data));
-  } catch (err) {
-    yield put(
-      toastrActions.add({
-        type: 'error',
-        title: 'Atenção',
-        message: 'Erro ao carregar os meetups.',
-        options: {
-          showCloseButton: true,
-          timeOut: 2500,
-        },
-      }),
-    );
-  }
-}
-
-export function* filterMeetupRecomended({ filter }) {
-  try {
-    const response = yield call(api.get, `meetups?filter=${filter}`);
-
-    yield put(MeetupsActions.meetupRecomendedSuccess(response.data));
-  } catch (err) {
-    yield put(
-      toastrActions.add({
-        type: 'error',
-        title: 'Atenção',
-        message: 'Erro ao carregar os meetups.',
-        options: {
-          showCloseButton: true,
-          timeOut: 2500,
+          timeOut: 3500,
         },
       }),
     );
@@ -118,6 +68,7 @@ export function* searchMeetup({ title }) {
 
     yield put(MeetupsActions.meetupSearchSuccess(response.data));
   } catch (err) {
+    yield put(MeetupsActions.meetupSearchFailed());
     yield put(
       toastrActions.add({
         type: 'error',
@@ -125,7 +76,7 @@ export function* searchMeetup({ title }) {
         message: 'Erro ao buscar os meetups.',
         options: {
           showCloseButton: true,
-          timeOut: 2500,
+          timeOut: 3500,
         },
       }),
     );
@@ -146,7 +97,7 @@ export function* detailsMeetup({ id }) {
         message: 'Erro ao carregar o meetup.',
         options: {
           showCloseButton: true,
-          timeOut: 2500,
+          timeOut: 3500,
         },
       }),
     );
@@ -158,7 +109,6 @@ export function* subscribeMeetup({ id }) {
     yield call(api.post, `meetups/${id}/subscribe`);
 
     yield put(MeetupsActions.meetupSubscribeSuccess());
-
     yield put(
       toastrActions.add({
         type: 'success',
@@ -166,13 +116,13 @@ export function* subscribeMeetup({ id }) {
         message: 'Sua inscrição foi feita no meetup.',
         options: {
           showCloseButton: true,
-          timeOut: 2500,
+          timeOut: 3500,
         },
       }),
     );
-
     yield put(push('/dashboard'));
   } catch (err) {
+    yield put(MeetupsActions.meetupSubscribeFailed());
     yield put(
       toastrActions.add({
         type: 'error',
@@ -180,7 +130,7 @@ export function* subscribeMeetup({ id }) {
         message: 'Erro ao fazer sua inscrição no meetup.',
         options: {
           showCloseButton: true,
-          timeOut: 2500,
+          timeOut: 3500,
         },
       }),
     );
@@ -192,21 +142,20 @@ export function* unsubscribeMeetup({ id }) {
     yield call(api.delete, `meetups/${id}/unsubscribe`);
 
     yield put(MeetupsActions.meetupUnsubscribeSuccess());
-
     yield put(
       toastrActions.add({
         type: 'success',
         title: 'Sucesso',
-        message: 'O canelamento da sua inscrição no meetup foi feito.',
+        message: 'O cancelamento da sua inscrição no meetup foi concluído.',
         options: {
           showCloseButton: true,
-          timeOut: 2500,
+          timeOut: 3500,
         },
       }),
     );
-
     yield put(push('/dashboard'));
   } catch (err) {
+    yield put(MeetupsActions.meetupUnsubscribeFailed());
     yield put(
       toastrActions.add({
         type: 'error',
@@ -214,7 +163,7 @@ export function* unsubscribeMeetup({ id }) {
         message: 'Erro ao fazer o cancelamento da sua inscrição no meetup.',
         options: {
           showCloseButton: true,
-          timeOut: 2500,
+          timeOut: 3500,
         },
       }),
     );
