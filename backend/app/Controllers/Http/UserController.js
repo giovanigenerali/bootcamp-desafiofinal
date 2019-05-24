@@ -40,7 +40,7 @@ class UserController {
     const userUpdated = await User.query()
       .where('id', user.id)
       .with('preferences')
-      .fetch()
+      .first()
 
     return userUpdated
   }
