@@ -14,17 +14,13 @@ const middlewares = [sagaMiddleware, routerMiddleware(history)];
 
 const tronMiddleware = process.env.NODE_ENV === 'development' ? console.tron.createEnhancer : () => {};
 
-const reduxDevToolsExtension = process.env.NODE_ENV === 'development'
-  ? window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  : null;
+const composeEnhancer = process.env.NODE_ENV === 'development' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  : compose;
 
 const store = createStore(
   reducers(history),
-  compose(
-    applyMiddleware(...middlewares),
-    tronMiddleware(),
-  ),
-  reduxDevToolsExtension,
+  composeEnhancer(applyMiddleware(...middlewares), tronMiddleware()),
 );
 
 sagaMiddleware.run(sagas);
