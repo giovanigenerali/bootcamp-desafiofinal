@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import MeetupsActions from '../../../store/ducks/meetups';
 
+import Button from '../../../styles/components/Button';
+import Loading from '../../../styles/components/Loading';
 import {
   Container,
   MeetupContainer,
@@ -21,7 +23,6 @@ import {
 } from './styles';
 
 import Navbar from '../../../components/Navbar';
-import Button from '../../../styles/components/Button';
 
 class DetailsMeetup extends Component {
   static propTypes = {
@@ -92,9 +93,7 @@ class DetailsMeetup extends Component {
         {notFound && <Redirect to="/" />}
         <Navbar />
         <Container>
-          {loadingMeetupDetails && (
-            <div style={{ marginBottom: 40, color: 'rgba(255, 255, 255, 0.8)' }}>Carregando...</div>
-          )}
+          {loadingMeetupDetails && <Loading>Carregando...</Loading>}
 
           {meetup && (
             <MeetupContainer>

@@ -13,6 +13,7 @@ import Form from '../../styles/components/Form';
 import Button from '../../styles/components/Button';
 import Themes from '../../styles/components/Themes';
 import Input from '../../styles/components/Input';
+import Loading from '../../styles/components/Loading';
 import { Container, PreferencesIntro } from './styles';
 
 import Navbar from '../../components/Navbar';
@@ -131,9 +132,7 @@ class Profile extends Component {
       <>
         {!firstLogin && <Navbar />}
         <Container>
-          {loadingProfile && (
-            <div style={{ marginBottom: 40, color: 'rgba(255, 255, 255, 0.8)' }}>Carregando...</div>
-          )}
+          {loadingProfile && <Loading>Carregando...</Loading>}
           {!loadingProfile && (
             <>
               <Form onSubmit={this.handleSubmit}>
@@ -190,13 +189,7 @@ class Profile extends Component {
                 )}
 
                 <label htmlFor="preferences[]">Preferências</label>
-                {loadingThemes && (
-                  <div
-                    style={{ marginTop: 10, marginBottom: 40, color: 'rgba(255, 255, 255, 0.8)' }}
-                  >
-                    Carregando...
-                  </div>
-                )}
+                {loadingThemes && <Loading>Carregando...</Loading>}
                 {!loadingThemes && (
                   <Themes>
                     {themes.data.map(theme => (

@@ -7,8 +7,14 @@ import { bindActionCreators } from 'redux';
 import { MdSearch, MdRemoveCircleOutline } from 'react-icons/md';
 import MeetupsActions from '../../../store/ducks/meetups';
 
+import Loading from '../../../styles/components/Loading';
 import {
-  Container, MeetupSearch, MeetupSearchInput, MeetupContainer, MeetupList,
+  Container,
+  MeetupSearch,
+  MeetupSearchInput,
+  MeetupContainer,
+  MeetupList,
+  Message,
 } from './styles';
 
 import Navbar from '../../../components/Navbar';
@@ -45,21 +51,26 @@ class Search extends Component {
     }
   }
 
-  handleSubmitSearch = (event) => {
-    const { meetupSearchRequest } = this.props;
+  handleChangeInputSearch = (event) => {
     const search = event.target.value;
 
-    if (event.key === 'Enter') {
-      if (search.trim().length > 0) {
-        this.setState({ search });
-        meetupSearchRequest(search);
-      } else {
-        this.setState({ meetups: [] });
-      }
+    if (search.trim().length > 0) {
+      this.setState({ search });
+    } else {
+      this.setState({ meetups: [] });
     }
 
     if (search.trim().length === 0) {
       this.setState({ search: '', meetups: [] });
+    }
+  };
+
+  handleSubmitSearch = (event) => {
+    const { meetupSearchRequest } = this.props;
+    const { search } = this.state;
+
+    if (event.key === 'Enter') {
+      meetupSearchRequest(search);
     }
   };
 
@@ -84,7 +95,7 @@ class Search extends Component {
             <MeetupSearchInput
               ref={this.searchInput}
               value={search}
-              onChange={event => this.setState({ search: event.target.value })}
+              onChange={event => this.handleChangeInputSearch(event)}
               placeholder="Digite o título do meetup e pressione enter"
               onKeyDown={event => this.handleSubmitSearch(event)}
             />
@@ -99,30 +110,16 @@ class Search extends Component {
 
           <MeetupContainer>
             {!loadingMeetupSearch && meetups.data && meetups.data.length > 0 && (
-              <div style={{ marginTop: 20, marginBottom: 20, color: 'rgba(255, 255, 255, 0.8)' }}>
+              <Message>
                 {total > 1 ? 'Foram encontrados' : 'Foi encontrato'}
                 {' '}
-                <strong
-                  style={{
-                    fontSize: 14,
-                    borderRadius: 4,
-                    backgroundColor: '#e5556e',
-                    paddingLeft: 4,
-                    paddingRight: 4,
-                  }}
-                >
-                  {total}
-                </strong>
+                <span>{total}</span>
                 {' '}
                 {total > 1 ? 'meetups' : 'meetup'}
-              </div>
+              </Message>
             )}
 
-            {loadingMeetupSearch && (
-              <div style={{ marginTop: 20, marginBottom: 20, color: 'rgba(255, 255, 255, 0.8)' }}>
-                Efetuando busca...
-              </div>
-            )}
+            {loadingMeetupSearch && <Loading>Efetuando busca...</Loading>}
 
             {!loadingMeetupSearch && meetups.data && meetups.data.length > 0 && (
               <MeetupList>
@@ -133,22 +130,11 @@ class Search extends Component {
             )}
 
             {!loadingMeetupSearch && meetups.data && meetups.data.length === 0 && (
-              <div style={{ marginTop: 20, marginBottom: 20, color: 'rgba(255, 255, 255, 0.8)' }}>
+              <Message>
                 Nenhum meetup encontrado com o título:
                 {' '}
-                <strong
-                  style={{
-                    fontSize: 14,
-                    borderRadius: 3,
-                    backgroundColor: '#e5556e',
-                    paddingLeft: 4,
-                    paddingRight: 4,
-                    marginLeft: 4,
-                  }}
-                >
-                  {search}
-                </strong>
-              </div>
+                <span>{search}</span>
+              </Message>
             )}
           </MeetupContainer>
         </Container>

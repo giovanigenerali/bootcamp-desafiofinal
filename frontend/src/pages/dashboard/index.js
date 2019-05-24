@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import MeetupsActions from '../../store/ducks/meetups';
 
+import Loading from '../../styles/components/Loading';
 import {
-  Container, MeetupContainer, MeetupContainerTitle, MeetupList,
+  Container, MeetupContainer, MeetupContainerTitle, MeetupList, Message,
 } from './styles';
 
 import Navbar from '../../components/Navbar';
@@ -49,11 +50,7 @@ class Dashboard extends Component {
         <Container>
           <MeetupContainer>
             <MeetupContainerTitle>Inscrições</MeetupContainerTitle>
-            {loadingMeetupsSubscribed && (
-              <div style={{ marginBottom: 40, color: 'rgba(255, 255, 255, 0.8)' }}>
-                Carregando...
-              </div>
-            )}
+            {loadingMeetupsSubscribed && <Loading>Carregando...</Loading>}
             {!loadingMeetupsSubscribed
               && meetupsSubscribed.data
               && meetupsSubscribed.data.length > 0 && (
@@ -69,17 +66,11 @@ class Dashboard extends Component {
             {!loadingMeetupsSubscribed
               && meetupsSubscribed.data
               && meetupsSubscribed.data.length === 0 && (
-                <div style={{ marginBottom: 40, color: 'rgba(255, 255, 255, 0.8)' }}>
-                  Você não está inscrito em nenhum meetup.
-                </div>
+                <Message>Você não está inscrito em nenhum meetup.</Message>
             )}
 
             <MeetupContainerTitle>Próximos meetups</MeetupContainerTitle>
-            {loadingMeetupsUpcoming && (
-              <div style={{ marginBottom: 40, color: 'rgba(255, 255, 255, 0.8)' }}>
-                Carregando...
-              </div>
-            )}
+            {loadingMeetupsUpcoming && <Loading>Carregando...</Loading>}
             {!loadingMeetupsUpcoming && meetupsUpcoming.data && meetupsUpcoming.data.length > 0 && (
               <MeetupList>
                 {!loadingMeetupsUpcoming
@@ -93,17 +84,11 @@ class Dashboard extends Component {
             {!loadingMeetupsUpcoming
               && meetupsUpcoming.data
               && meetupsUpcoming.data.length === 0 && (
-                <div style={{ marginBottom: 40, color: 'rgba(255, 255, 255, 0.8)' }}>
-                  Não existe nenhum meetup para os próximos dias
-                </div>
+                <Message>Não existe nenhum meetup para os próximos dias</Message>
             )}
 
             <MeetupContainerTitle>Recomendados</MeetupContainerTitle>
-            {loadingMeetupsRecomended && (
-              <div style={{ marginBottom: 40, color: 'rgba(255, 255, 255, 0.8)' }}>
-                Carregando...
-              </div>
-            )}
+            {loadingMeetupsRecomended && <Loading>Carregando...</Loading>}
             {!loadingMeetupsRecomended
               && meetupsRecomended.data
               && meetupsRecomended.data.length > 0 && (
@@ -119,9 +104,7 @@ class Dashboard extends Component {
             {!loadingMeetupsRecomended
               && meetupsRecomended.data
               && meetupsRecomended.data.length === 0 && (
-                <div style={{ marginBottom: 40, color: 'rgba(255, 255, 255, 0.8)' }}>
-                  Nenhum meetup recomendado para você no momento.
-                </div>
+                <Message>Nenhum meetup recomendado para você no momento.</Message>
             )}
           </MeetupContainer>
         </Container>

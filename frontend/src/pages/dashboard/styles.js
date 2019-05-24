@@ -43,3 +43,8 @@ export const MeetupList = styled.div`
     grid-template-columns: 290px;
   }
 `;
+
+export const Message = styled.div`
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 40px;
+`;

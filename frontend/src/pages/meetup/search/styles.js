@@ -15,6 +15,7 @@ export const MeetupSearch = styled.div`
   align-items: center;
   background: #302d38;
   border-radius: 4px;
+  margin-bottom: 20px;
   width: 100%;
 
   .searchIcon {
@@ -76,5 +77,19 @@ export const MeetupList = styled.div`
   }
   @media all and (max-width: 768px) {
     grid-template-columns: 290px;
+  }
+`;
+
+export const Message = styled.div`
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 20px;
+
+  span {
+    font-size: 14px;
+    border-radius: 3px;
+    background-color: #e5556e;
+    padding-left: 4px;
+    padding-right: 4px;
+    margin-left: 4px;
   }
 `;
