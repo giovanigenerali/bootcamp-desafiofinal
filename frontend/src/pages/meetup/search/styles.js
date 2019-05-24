@@ -3,19 +3,19 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex: 1;
-  justify-content: center;
-  align-items: center;
   margin: 40px 26px;
-  flex-direction: column;
+  flex-flow: column;
+  align-items: center;
 `;
 
 export const MeetupSearch = styled.div`
-  background: #302d38;
-  border-radius: 4px;
   display: flex;
   flex: 1;
-  width: 910px;
+  max-width: 910px;
   align-items: center;
+  background: #302d38;
+  border-radius: 4px;
+  width: 100%;
 
   .searchIcon {
     color: rgba(256, 256, 256, 0.6);
@@ -52,7 +52,8 @@ export const MeetupSearchInput = styled.input`
 export const MeetupContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 910px;
+  width: 100%;
+  max-width: 910px;
 `;
 
 export const MeetupList = styled.div`

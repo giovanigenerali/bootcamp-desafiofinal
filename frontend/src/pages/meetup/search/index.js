@@ -50,7 +50,7 @@ class Search extends Component {
     const search = event.target.value;
 
     if (event.key === 'Enter') {
-      if (search.length > 0) {
+      if (search.trim().length > 0) {
         this.setState({ search });
         meetupSearchRequest(search);
       } else {
@@ -58,8 +58,8 @@ class Search extends Component {
       }
     }
 
-    if (search.length === 0) {
-      this.setState({ meetups: [] });
+    if (search.trim().length === 0) {
+      this.setState({ search: '', meetups: [] });
     }
   };
 

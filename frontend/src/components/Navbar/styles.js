@@ -50,12 +50,12 @@ export const Nav = styled.nav`
   li {
     margin-right: 30px;
 
-    &:last-child {
-      margin-right: 0;
-    }
-
     @media all and (max-width: 375px) {
       margin-right: 20px;
+    }
+
+    &:last-child {
+      margin-right: 0;
     }
   }
 
@@ -65,6 +65,10 @@ export const Nav = styled.nav`
     font-weight: bold;
     text-decoration: none;
     transition: color 0.2s ease;
+
+    @media all and (max-width: 375px) {
+      font-size: 0.9em;
+    }
 
     &:hover,
     &.active {

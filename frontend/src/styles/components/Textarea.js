@@ -9,13 +9,14 @@ const Textarea = styled.textarea`
   padding: 0;
   resize: none;
   height: 100px;
-
-  &::placeholder {
-    color: rgba(256, 256, 256, 0.6);
-  }
+  text-size-adjust: none;
 
   @media all and (max-width: 768px) {
     font-size: 1em;
+  }
+
+  &::placeholder {
+    color: rgba(256, 256, 256, 0.6);
   }
 `;
 

@@ -14,6 +14,10 @@ const Themes = styled.div`
     cursor: pointer;
     transition: color 0.2s ease;
 
+    @media all and (max-width: 768px) {
+      font-size: 1em;
+    }
+
     &:hover {
       color: rgba(255, 255, 255, 1);
     }

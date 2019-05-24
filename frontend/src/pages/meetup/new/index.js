@@ -23,6 +23,7 @@ import Button from '../../../styles/components/Button';
 import Themes from '../../../styles/components/Themes';
 import FileUpload from '../../../styles/components/FileUpload';
 import { Container } from './styles';
+import '../../../styles/custom/datepicker.scss';
 
 import Navbar from '../../../components/Navbar';
 
