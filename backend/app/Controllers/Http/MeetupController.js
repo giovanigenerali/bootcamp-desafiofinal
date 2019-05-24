@@ -72,7 +72,7 @@ class MeetupController {
     const meetupNew = await Meetup.query()
       .where('id', meetup.id)
       .with('themes')
-      .fetch()
+      .first()
 
     return meetupNew
   }
