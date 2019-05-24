@@ -9,9 +9,7 @@ import { loadThemes } from './themes';
 import { MeetupsTypes } from '../ducks/meetups';
 import {
   newMeetup,
-  filterMeetupSubscribed,
-  filterMeetupUpcoming,
-  filterMeetupRecomended,
+  filterMeetup,
   searchMeetup,
   detailsMeetup,
   subscribeMeetup,
@@ -30,15 +28,9 @@ export default function* rootSaga() {
 
     takeLatest(MeetupsTypes.MEETUP_NEW_REQUEST, newMeetup),
 
-    takeLatest(MeetupsTypes.MEETUP_SUBSCRIBED_REQUEST, filterMeetupSubscribed, {
-      filter: 'subscribed',
-    }),
-    takeLatest(MeetupsTypes.MEETUP_UPCOMING_REQUEST, filterMeetupUpcoming, {
-      filter: 'upcoming',
-    }),
-    takeLatest(MeetupsTypes.MEETUP_RECOMENDED_REQUEST, filterMeetupRecomended, {
-      filter: 'recomended',
-    }),
+    takeLatest(MeetupsTypes.MEETUP_SUBSCRIBED_REQUEST, filterMeetup, { filter: 'subscribed' }),
+    takeLatest(MeetupsTypes.MEETUP_UPCOMING_REQUEST, filterMeetup, { filter: 'upcoming' }),
+    takeLatest(MeetupsTypes.MEETUP_RECOMENDED_REQUEST, filterMeetup, { filter: 'recomended' }),
     takeLatest(MeetupsTypes.MEETUP_SEARCH_REQUEST, searchMeetup),
     takeLatest(MeetupsTypes.MEETUP_DETAILS_REQUEST, detailsMeetup),
     takeLatest(MeetupsTypes.MEETUP_SUBSCRIBE_REQUEST, subscribeMeetup),

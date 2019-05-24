@@ -32,7 +32,8 @@ class Profile extends Component {
       id: PropTypes.string,
       title: PropTypes.string,
     }).isRequired,
-    loading: PropTypes.bool.isRequired,
+    loadingProfile: PropTypes.bool.isRequired,
+    loadingThemes: PropTypes.bool.isRequired,
   };
 
   state = {
@@ -41,6 +42,7 @@ class Profile extends Component {
     passwordConfirmation: '',
     preferencesId: [],
     firstLogin: false,
+    loadingProfile: false,
   };
 
   componentDidMount() {
@@ -49,16 +51,20 @@ class Profile extends Component {
     loadThemesRequest();
     loadProfileRequest();
 
-    this.setState({ firstLogin: !!localStorage.getItem('@meetapp:first_login') });
+    this.setState({
+      loadingProfile: true,
+      firstLogin: !!localStorage.getItem('@meetapp:first_login'),
+    });
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.loading) {
+    if (!nextProps.loadingProfile) {
       const { profile } = nextProps;
       if (profile.data) {
         const { name, preferences } = profile.data;
         const preferencesId = preferences && preferences.map(preference => preference.id);
-        this.setState({ name, preferencesId });
+
+        this.setState({ name, preferencesId, loadingProfile: false });
       }
     }
   }
@@ -111,16 +117,24 @@ class Profile extends Component {
   };
 
   render() {
-    const { loading, themes } = this.props;
+    const { loadingThemes, themes } = this.props;
     const {
-      name, password, passwordConfirmation, preferencesId, firstLogin,
+      name,
+      password,
+      passwordConfirmation,
+      preferencesId,
+      firstLogin,
+      loadingProfile,
     } = this.state;
 
     return (
       <>
-        {!firstLogin && <Navbar /> }
+        {!firstLogin && <Navbar />}
         <Container>
-          {!loading && (
+          {loadingProfile && (
+            <div style={{ marginBottom: 40, color: 'rgba(255, 255, 255, 0.8)' }}>Carregando...</div>
+          )}
+          {!loadingProfile && (
             <>
               <Form onSubmit={this.handleSubmit}>
                 {!firstLogin && (
@@ -176,20 +190,29 @@ class Profile extends Component {
                 )}
 
                 <label htmlFor="preferences[]">Preferências</label>
-                <Themes>
-                  {themes.data.map(theme => (
-                    <label key={theme.id}>
-                      <Input
-                        type="checkbox"
-                        name="preferences[]"
-                        checked={preferencesId && preferencesId.includes(theme.id)}
-                        value={theme.id}
-                        onChange={this.handleCheckboxChange}
-                      />
-                      <span>{theme.title}</span>
-                    </label>
-                  ))}
-                </Themes>
+                {loadingThemes && (
+                  <div
+                    style={{ marginTop: 10, marginBottom: 40, color: 'rgba(255, 255, 255, 0.8)' }}
+                  >
+                    Carregando...
+                  </div>
+                )}
+                {!loadingThemes && (
+                  <Themes>
+                    {themes.data.map(theme => (
+                      <label key={theme.id}>
+                        <Input
+                          type="checkbox"
+                          name="preferences[]"
+                          checked={preferencesId && preferencesId.includes(theme.id)}
+                          value={theme.id}
+                          onChange={this.handleCheckboxChange}
+                        />
+                        <span>{theme.title}</span>
+                      </label>
+                    ))}
+                  </Themes>
+                )}
 
                 <Button type="submit">{firstLogin ? 'Continuar' : 'Salvar'}</Button>
               </Form>
@@ -205,8 +228,9 @@ class Profile extends Component {
 
 const mapStateToProps = state => ({
   themes: state.themes,
+  loadingThemes: state.themes.loading,
   profile: state.profile,
-  loading: state.profile.loading,
+  loadingProfile: state.profile.loading,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(

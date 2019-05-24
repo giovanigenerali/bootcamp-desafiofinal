@@ -6,6 +6,7 @@ import Immutable from 'seamless-immutable';
 const { Types, Creators } = createActions({
   loadProfileRequest: null,
   loadProfileSuccess: ['data'],
+
   updateProfileRequest: ['name', 'password', 'passwordConfirmation', 'preferencesId'],
   updateProfileSuccess: null,
 });
@@ -30,5 +31,6 @@ export const loadSuccess = (state, { data }) => state.merge({ data, loading: fal
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.LOAD_PROFILE_REQUEST]: loadRequest,
   [Types.LOAD_PROFILE_SUCCESS]: loadSuccess,
+
   [Types.UPDATE_PROFILE_SUCCESS]: loadSuccess,
 });

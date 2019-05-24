@@ -44,28 +44,32 @@ export const INITIAL_STATE = Immutable({
   title: null,
   id: null,
   meetup: null,
-  loading: false,
+  loadingMeetupsSubscribed: false,
+  loadingMeetupsUpcoming: false,
+  loadingMeetupsRecomended: false,
+  loadingMeetupSearch: false,
+  loadingMeetupDetails: false,
 });
 
 /* Reducers */
 
 export const successMeetupNew = state => state.merge({ ...state });
 
-export const requestMeetupSubscribed = state => state.merge({ loading: true });
-export const successMeetupSubscribed = (state, { subscribed }) => state.merge({ subscribed, loading: false });
+export const requestMeetupSubscribed = state => state.merge({ loadingMeetupsSubscribed: true });
+export const successMeetupSubscribed = (state, { subscribed }) => state.merge({ subscribed, loadingMeetupsSubscribed: false });
 
-export const requestMeetupUpcoming = state => state.merge({ loading: true });
-export const successMeetupUpcoming = (state, { upcoming }) => state.merge({ upcoming, loading: false });
+export const requestMeetupUpcoming = state => state.merge({ loadingMeetupsUpcoming: true });
+export const successMeetupUpcoming = (state, { upcoming }) => state.merge({ upcoming, loadingMeetupsUpcoming: false });
 
-export const requestMeetupRecomended = state => state.merge({ loading: true });
-export const successMeetupRecomended = (state, { recomended }) => state.merge({ recomended, loading: false });
+export const requestMeetupRecomended = state => state.merge({ loadingMeetupsRecomended: true });
+export const successMeetupRecomended = (state, { recomended }) => state.merge({ recomended, loadingMeetupsRecomended: false });
 
-export const requestMeetupSearch = (state, { title }) => state.merge({ title, loading: true });
-export const successMeetupSearch = (state, { search }) => state.merge({ search, loading: false });
+export const requestMeetupSearch = (state, { title }) => state.merge({ title, loadingMeetupSearch: true });
+export const successMeetupSearch = (state, { search }) => state.merge({ search, loadingMeetupSearch: false });
 
-export const requestMeetupDetails = (state, { id }) => state.merge({ id, loading: true });
-export const successMeetupDetails = (state, { meetup }) => state.merge({ meetup, loading: false });
-export const failedMeetupDetails = state => state.merge({ loading: false });
+export const requestMeetupDetails = (state, { id }) => state.merge({ id, loadingMeetupDetails: true });
+export const successMeetupDetails = (state, { meetup }) => state.merge({ meetup, loadingMeetupDetails: false });
+export const failedMeetupDetails = state => state.merge({ loadingMeetupDetails: false });
 
 export const requestMeetupSubscribe = (state, { id }) => state.merge({ id });
 export const successMeetupSubscribe = state => state;

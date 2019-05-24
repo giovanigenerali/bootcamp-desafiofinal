@@ -18,7 +18,7 @@ class Search extends Component {
   static propTypes = {
     meetupSearchRequest: PropTypes.func.isRequired,
     meetups: PropTypes.any.isRequired,
-    loading: PropTypes.bool.isRequired,
+    loadingMeetupSearch: PropTypes.bool.isRequired,
   };
 
   constructor(props) {
@@ -37,7 +37,7 @@ class Search extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.loading) {
+    if (!nextProps.loadingMeetupSearch) {
       const { meetups } = nextProps;
       if (meetups) {
         this.setState({ meetups, total: parseInt(meetups.total, 10) });
@@ -72,7 +72,7 @@ class Search extends Component {
   };
 
   render() {
-    const { loading } = this.props;
+    const { loadingMeetupSearch } = this.props;
     const { search, meetups, total } = this.state;
 
     return (
@@ -88,7 +88,7 @@ class Search extends Component {
               placeholder="Digite o título do meetup e pressione enter"
               onKeyDown={event => this.handleSubmitSearch(event)}
             />
-            {!loading && search && (
+            {!loadingMeetupSearch && search && (
               <MdRemoveCircleOutline
                 className="searchClear"
                 onClick={this.handleClearSearch}
@@ -98,7 +98,7 @@ class Search extends Component {
           </MeetupSearch>
 
           <MeetupContainer>
-            {!loading && meetups.data && meetups.data.length > 0 && (
+            {!loadingMeetupSearch && meetups.data && meetups.data.length > 0 && (
               <div style={{ marginTop: 20, marginBottom: 20, color: 'rgba(255, 255, 255, 0.8)' }}>
                 {total > 1 ? 'Foram encontrados' : 'Foi encontrato'}
                 {' '}
@@ -118,13 +118,13 @@ class Search extends Component {
               </div>
             )}
 
-            {loading && (
+            {loadingMeetupSearch && (
               <div style={{ marginTop: 20, marginBottom: 20, color: 'rgba(255, 255, 255, 0.8)' }}>
                 Efetuando busca...
               </div>
             )}
 
-            {!loading && meetups.data && meetups.data.length > 0 && (
+            {!loadingMeetupSearch && meetups.data && meetups.data.length > 0 && (
               <MeetupList>
                 {meetups.data.map(meetup => (
                   <MeetupItem key={meetup.id} meetup={meetup} />
@@ -132,7 +132,7 @@ class Search extends Component {
               </MeetupList>
             )}
 
-            {!loading && meetups.data && meetups.data.length === 0 && (
+            {!loadingMeetupSearch && meetups.data && meetups.data.length === 0 && (
               <div style={{ marginTop: 20, marginBottom: 20, color: 'rgba(255, 255, 255, 0.8)' }}>
                 Nenhum meetup encontrado com o título:
                 {' '}
@@ -158,7 +158,7 @@ class Search extends Component {
 }
 
 const mapStateToProps = state => ({
-  loading: state.meetups.loading,
+  loadingMeetupSearch: state.meetups.loadingMeetupSearch,
   meetups: state.meetups.search,
 });
 

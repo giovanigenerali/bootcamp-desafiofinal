@@ -41,7 +41,7 @@ class DetailsMeetup extends Component {
         id: PropTypes.string,
       }),
     }).isRequired,
-    loading: PropTypes.bool.isRequired,
+    loadingMeetupDetails: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -60,7 +60,7 @@ class DetailsMeetup extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.loading) {
+    if (!nextProps.loadingMeetupDetails) {
       const { meetup } = nextProps;
 
       if (meetup) {
@@ -84,7 +84,7 @@ class DetailsMeetup extends Component {
   };
 
   render() {
-    const { loading } = this.props;
+    const { loadingMeetupDetails } = this.props;
     const { meetup, notFound } = this.state;
 
     return (
@@ -92,7 +92,7 @@ class DetailsMeetup extends Component {
         {notFound && <Redirect to="/" />}
         <Navbar />
         <Container>
-          {loading && (
+          {loadingMeetupDetails && (
             <div style={{ marginBottom: 40, color: 'rgba(255, 255, 255, 0.8)' }}>Carregando...</div>
           )}
 
@@ -138,7 +138,7 @@ class DetailsMeetup extends Component {
 }
 
 const mapStateToProps = state => ({
-  loading: state.meetups.loading,
+  loadingMeetupDetails: state.meetups.loadingMeetupDetails,
   meetup: state.meetups.meetup,
 });
 

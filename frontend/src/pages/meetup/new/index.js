@@ -192,7 +192,9 @@ class NewMeetup extends Component {
               value={description}
               required
               onChange={this.handleInputChange}
-            >{description}</Textarea>
+            >
+              {description}
+            </Textarea>
 
             <label htmlFor="when">Data/hora</label>
             <DatePicker

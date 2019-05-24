@@ -20,7 +20,9 @@ class Dashboard extends Component {
     meetupsSubscribed: PropTypes.any.isRequired,
     meetupsUpcoming: PropTypes.any.isRequired,
     meetupsRecomended: PropTypes.any.isRequired,
-    loading: PropTypes.bool.isRequired,
+    loadingMeetupsSubscribed: PropTypes.bool.isRequired,
+    loadingMeetupsUpcoming: PropTypes.bool.isRequired,
+    loadingMeetupsRecomended: PropTypes.bool.isRequired,
   };
 
   componentDidMount() {
@@ -33,7 +35,12 @@ class Dashboard extends Component {
 
   render() {
     const {
-      meetupsSubscribed, meetupsUpcoming, meetupsRecomended, loading,
+      meetupsSubscribed,
+      meetupsUpcoming,
+      meetupsRecomended,
+      loadingMeetupsSubscribed,
+      loadingMeetupsUpcoming,
+      loadingMeetupsRecomended,
     } = this.props;
 
     return (
@@ -42,36 +49,40 @@ class Dashboard extends Component {
         <Container>
           <MeetupContainer>
             <MeetupContainerTitle>Inscrições</MeetupContainerTitle>
-            {loading && (
+            {loadingMeetupsSubscribed && (
               <div style={{ marginBottom: 40, color: 'rgba(255, 255, 255, 0.8)' }}>
                 Carregando...
               </div>
             )}
-            {!loading && meetupsSubscribed.data && meetupsSubscribed.data.length > 0 && (
-              <MeetupList>
-                {!loading
-                  && meetupsSubscribed.data
-                  && meetupsSubscribed.data.length > 0
-                  && meetupsSubscribed.data.map(meetup => (
-                    <MeetupItem key={meetup.id} meetup={meetup} />
-                  ))}
-              </MeetupList>
+            {!loadingMeetupsSubscribed
+              && meetupsSubscribed.data
+              && meetupsSubscribed.data.length > 0 && (
+                <MeetupList>
+                  {!loadingMeetupsSubscribed
+                    && meetupsSubscribed.data
+                    && meetupsSubscribed.data.length > 0
+                    && meetupsSubscribed.data.map(meetup => (
+                      <MeetupItem key={meetup.id} meetup={meetup} />
+                    ))}
+                </MeetupList>
             )}
-            {!loading && meetupsSubscribed.data && meetupsSubscribed.data.length === 0 && (
-              <div style={{ marginBottom: 40, color: 'rgba(255, 255, 255, 0.8)' }}>
-                Você não está inscrito em nenhum meetup.
-              </div>
+            {!loadingMeetupsSubscribed
+              && meetupsSubscribed.data
+              && meetupsSubscribed.data.length === 0 && (
+                <div style={{ marginBottom: 40, color: 'rgba(255, 255, 255, 0.8)' }}>
+                  Você não está inscrito em nenhum meetup.
+                </div>
             )}
 
             <MeetupContainerTitle>Próximos meetups</MeetupContainerTitle>
-            {loading && (
+            {loadingMeetupsUpcoming && (
               <div style={{ marginBottom: 40, color: 'rgba(255, 255, 255, 0.8)' }}>
                 Carregando...
               </div>
             )}
-            {!loading && meetupsUpcoming.data && meetupsUpcoming.data.length > 0 && (
+            {!loadingMeetupsUpcoming && meetupsUpcoming.data && meetupsUpcoming.data.length > 0 && (
               <MeetupList>
-                {!loading
+                {!loadingMeetupsUpcoming
                   && meetupsUpcoming.data
                   && meetupsUpcoming.data.length > 0
                   && meetupsUpcoming.data.map(meetup => (
@@ -79,32 +90,38 @@ class Dashboard extends Component {
                   ))}
               </MeetupList>
             )}
-            {!loading && meetupsUpcoming.data && meetupsUpcoming.data.length === 0 && (
-              <div style={{ marginBottom: 40, color: 'rgba(255, 255, 255, 0.8)' }}>
-                Não existe nenhum meetup para os próximos dias
-              </div>
+            {!loadingMeetupsUpcoming
+              && meetupsUpcoming.data
+              && meetupsUpcoming.data.length === 0 && (
+                <div style={{ marginBottom: 40, color: 'rgba(255, 255, 255, 0.8)' }}>
+                  Não existe nenhum meetup para os próximos dias
+                </div>
             )}
 
             <MeetupContainerTitle>Recomendados</MeetupContainerTitle>
-            {loading && (
+            {loadingMeetupsRecomended && (
               <div style={{ marginBottom: 40, color: 'rgba(255, 255, 255, 0.8)' }}>
                 Carregando...
               </div>
             )}
-            {!loading && meetupsRecomended.data && meetupsRecomended.data.length > 0 && (
-              <MeetupList>
-                {!loading
-                  && meetupsRecomended.data
-                  && meetupsRecomended.data.length > 0
-                  && meetupsRecomended.data.map(meetup => (
-                    <MeetupItem key={meetup.id} meetup={meetup} />
-                  ))}
-              </MeetupList>
+            {!loadingMeetupsRecomended
+              && meetupsRecomended.data
+              && meetupsRecomended.data.length > 0 && (
+                <MeetupList>
+                  {!loadingMeetupsRecomended
+                    && meetupsRecomended.data
+                    && meetupsRecomended.data.length > 0
+                    && meetupsRecomended.data.map(meetup => (
+                      <MeetupItem key={meetup.id} meetup={meetup} />
+                    ))}
+                </MeetupList>
             )}
-            {!loading && meetupsRecomended.data && meetupsRecomended.data.length === 0 && (
-              <div style={{ marginBottom: 40, color: 'rgba(255, 255, 255, 0.8)' }}>
-                Nenhum meetup recomendado para você no momento.
-              </div>
+            {!loadingMeetupsRecomended
+              && meetupsRecomended.data
+              && meetupsRecomended.data.length === 0 && (
+                <div style={{ marginBottom: 40, color: 'rgba(255, 255, 255, 0.8)' }}>
+                  Nenhum meetup recomendado para você no momento.
+                </div>
             )}
           </MeetupContainer>
         </Container>
@@ -114,9 +131,11 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = state => ({
-  loading: state.meetups.loading,
+  loadingMeetupsSubscribed: state.meetups.loadingMeetupsSubscribed,
   meetupsSubscribed: state.meetups.subscribed,
+  loadingMeetupsUpcoming: state.meetups.loadingMeetupsUpcoming,
   meetupsUpcoming: state.meetups.upcoming,
+  loadingMeetupsRecomended: state.meetups.loadingMeetupsRecomended,
   meetupsRecomended: state.meetups.recomended,
 });
 

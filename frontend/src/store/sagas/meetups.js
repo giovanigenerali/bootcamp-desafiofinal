@@ -26,6 +26,32 @@ export function* newMeetup({ data }) {
   }
 }
 
+export function* filterMeetup({ filter }) {
+  try {
+    const response = yield call(api.get, `meetups?filter=${filter}`);
+
+    if (filter === 'subscribed') {
+      yield put(MeetupsActions.meetupSubscribedSuccess(response.data));
+    } else if (filter === 'upcoming') {
+      yield put(MeetupsActions.meetupUpcomingSuccess(response.data));
+    } else if (filter === 'recomended') {
+      yield put(MeetupsActions.meetupRecomendedSuccess(response.data));
+    }
+  } catch (err) {
+    yield put(
+      toastrActions.add({
+        type: 'error',
+        title: 'Atenção',
+        message: 'Erro ao carregar os meetups.',
+        options: {
+          showCloseButton: true,
+          timeOut: 2500,
+        },
+      }),
+    );
+  }
+}
+
 export function* filterMeetupSubscribed({ filter }) {
   try {
     const response = yield call(api.get, `meetups?filter=${filter}`);
