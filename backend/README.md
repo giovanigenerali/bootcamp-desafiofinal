@@ -1,4 +1,4 @@
-# Backend
+# Rocketseat Desafio Final - Back End
 
 - ### Bancos de dados Postgres e Redis via Docker
 
