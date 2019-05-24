@@ -19,7 +19,7 @@ class UserController {
     return profile
   }
 
-  async update ({ request, response, auth: { user } }) {
+  async update ({ request, auth: { user } }) {
     const data = request.only(['name', 'email', 'password'])
 
     if (!data.password) {
