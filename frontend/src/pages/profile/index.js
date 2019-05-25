@@ -60,14 +60,13 @@ class Profile extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.loadingProfile && !nextProps.submittingProfile) {
-      const { profile } = nextProps;
-      if (profile.data) {
-        const { name, preferences } = profile.data;
-        const preferencesId = preferences && preferences.map(preference => preference.id);
+    const { loadingProfile, submittingProfile, profile } = nextProps;
 
-        this.setState({ name, preferencesId, loadingProfile: false });
-      }
+    if (!loadingProfile && !submittingProfile) {
+      const { name, preferences } = profile.data;
+      const preferencesId = preferences.map(preference => preference.id);
+
+      this.setState({ name, preferencesId, loadingProfile: false });
     }
   }
 
