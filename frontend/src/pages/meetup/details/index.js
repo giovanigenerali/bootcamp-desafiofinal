@@ -109,9 +109,9 @@ class DetailsMeetup extends Component {
               <MeetupInfoWrapper>
                 <MeetupTitle>{meetup.title}</MeetupTitle>
                 <MeetupMemebers>
-                  {parseInt(meetup.__meta__.members_count, 10) > 0
+                  {meetup.__meta__.members_count > 0
                     ? `${meetup.__meta__.members_count} membro${
-                      parseInt(meetup.__meta__.members_count, 10) > 1 ? 's' : ''
+                      meetup.__meta__.members_count > 1 ? 's' : ''
                     }`
                     : 'Incrições abertas'}
                 </MeetupMemebers>
