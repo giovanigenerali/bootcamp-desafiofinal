@@ -13,7 +13,8 @@ class Store {
       title: 'required',
       description: 'required',
       where: 'required',
-      when: [rule('required'), rule('date_format', 'YYYY-MM-DD HH:mm:ss')]
+      when: [rule('required'), rule('date_format', 'YYYY-MM-DD HH:mm:ss')],
+      image: 'required'
     }
   }
 

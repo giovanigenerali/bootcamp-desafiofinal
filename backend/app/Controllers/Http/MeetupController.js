@@ -38,43 +38,57 @@ class MeetupController {
     return meetups
   }
 
-  async store ({ request, auth: { user } }) {
+  async store ({ response, request, auth: { user } }) {
     const data = request.only(['title', 'description', 'where', 'when'])
 
-    const meetup = await Meetup.create({
-      ...data,
-      user_id: user.id
-    })
+    try {
+      const meetup = await Meetup.create({
+        ...data,
+        user_id: user.id
+      })
 
-    const meetupImage = request.file('image', {
-      types: ['image'],
-      size: '2mb',
-      extnames: ['png', 'jpg']
-    })
+      const meetupImage = request.file('image', {
+        types: ['image'],
+        size: '2mb',
+        extnames: ['png', 'jpg']
+      })
 
-    const imageName = `${meetup.id}.${meetupImage.extname}`
+      const imageName = `${meetup.id}.${meetupImage.extname}`
 
-    await meetupImage.move(Helpers.tmpPath('uploads'), {
-      name: imageName,
-      overwrite: true
-    })
+      await meetupImage.move(Helpers.tmpPath('uploads'), {
+        name: imageName,
+        overwrite: true
+      })
 
-    meetup.merge({ image: `${Env.get('APP_URL')}/images/${imageName}` })
+      if (!meetupImage.moved()) {
+        return response.status(400).send(meetupImage.error())
+      }
 
-    await meetup.save()
+      meetup.merge({ image: `${Env.get('APP_URL')}/images/${imageName}` })
 
-    const themesId = request.input(['themes_id'])
+      await meetup.save()
 
-    if (themesId) {
-      await meetup.themes().attach(themesId)
+      const themesId = request.input(['themes_id'])
+
+      if (themesId) {
+        try {
+          await meetup.themes().attach(themesId)
+        } catch (err) {
+          return response.status(400).send()
+        }
+      } else {
+        return response.status(400).send()
+      }
+
+      const meetupNew = await Meetup.query()
+        .where('id', meetup.id)
+        .with('themes')
+        .first()
+
+      return response.status(201).send(meetupNew)
+    } catch (err) {
+      return response.status(400).send()
     }
-
-    const meetupNew = await Meetup.query()
-      .where('id', meetup.id)
-      .with('themes')
-      .first()
-
-    return meetupNew
   }
 
   async show ({ params, response, auth: { user } }) {

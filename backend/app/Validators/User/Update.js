@@ -8,11 +8,8 @@ class Store {
   }
 
   get rules () {
-    const userId = this.ctx.auth.user.id
-
     return {
-      name: `required|unique:users,name,id,${userId}`,
-      password: 'confirmed'
+      password: 'confirmed|min:6'
     }
   }
 
